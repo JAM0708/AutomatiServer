@@ -1,6 +1,10 @@
 package com.automati.dataentity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,7 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="person")
 public class Person {
 
 	@Id
@@ -43,15 +50,17 @@ public class Person {
 	
 	@OneToMany(fetch=FetchType.LAZY)
 	@JoinColumn(name="credit_id")
-	private CreditCard creditCard;
+	private List<CreditCard> creditCard = new ArrayList<CreditCard>();
 	
 	
 	
 	public Person() {
 	}
 
+
+
 	public Person(int id, String firstName, String lastName, String street, String city, String password, State state,
-			Role role, CreditCard creditCard) {
+			Role role, List<CreditCard> creditCard) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -62,78 +71,116 @@ public class Person {
 		this.role = role;
 		this.creditCard = creditCard;
 	}
+
+
 
 	public int getId() {
 		return id;
 	}
 
+
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
+
 
 	public String getFirstName() {
 		return firstName;
 	}
 
+
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+
+
 
 	public String getLastName() {
 		return lastName;
 	}
 
+
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
+
 
 	public String getStreet() {
 		return street;
 	}
 
+
+
 	public void setStreet(String street) {
 		this.street = street;
 	}
+
+
 
 	public String getCity() {
 		return city;
 	}
 
+
+
 	public void setCity(String city) {
 		this.city = city;
 	}
+
+
 
 	public String getPassword() {
 		return password;
 	}
 
+
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+
 
 	public State getState() {
 		return state;
 	}
 
+
+
 	public void setState(State state) {
 		this.state = state;
 	}
+
+
 
 	public Role getRole() {
 		return role;
 	}
 
+
+
 	public void setRole(Role role) {
 		this.role = role;
 	}
 
-	public CreditCard getCreditCard() {
+
+
+	public List<CreditCard> getCreditCard() {
 		return creditCard;
 	}
 
-	public void setCreditCard(CreditCard creditCard) {
+
+
+	public void setCreditCard(List<CreditCard> creditCard) {
 		this.creditCard = creditCard;
 	}
+
+	
 	
 	
 	

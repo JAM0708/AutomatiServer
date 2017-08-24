@@ -1,5 +1,8 @@
 package com.automati.dataentity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -37,10 +40,10 @@ public class Car {
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "feature_id")
-	private Feature feature;
+	private List<Feature> feature;
 	
 	@OneToOne
-	@JoinColumn(name="transmission")
+	@JoinColumn(name="transmission_id")
 	private Transmission transmission;
 	
 	@OneToOne
@@ -60,19 +63,17 @@ public class Car {
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name="review_id")
-	private Review review;
+	private List<Review> review = new ArrayList<Review>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="person_id")
 	private Person person;
-	
-	
 
 	public Car() {
 	}
 
-	public Car(int id, int year, Model model, Color color, Feature feature, Transmission transmission,
-			Condition condition, EPA epa, double price, Lease lease, Review review, Person person) {
+	public Car(int id, int year, Model model, Color color, List<Feature> feature, Transmission transmission,
+			Condition condition, EPA epa, double price, Lease lease, List<Review> review, Person person) {
 		this.id = id;
 		this.year = year;
 		this.model = model;
@@ -119,11 +120,11 @@ public class Car {
 		this.color = color;
 	}
 
-	public Feature getFeature() {
+	public List<Feature> getFeature() {
 		return feature;
 	}
 
-	public void setFeature(Feature feature) {
+	public void setFeature(List<Feature> feature) {
 		this.feature = feature;
 	}
 
@@ -167,11 +168,11 @@ public class Car {
 		this.lease = lease;
 	}
 
-	public Review getReview() {
+	public List<Review> getReview() {
 		return review;
 	}
 
-	public void setReview(Review review) {
+	public void setReview(List<Review> review) {
 		this.review = review;
 	}
 
@@ -181,7 +182,10 @@ public class Car {
 
 	public void setPerson(Person person) {
 		this.person = person;
-	}
+	}	
+	
+	
+
 	
 	 
 }
