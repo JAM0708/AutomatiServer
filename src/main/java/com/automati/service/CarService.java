@@ -3,12 +3,16 @@ package com.automati.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.automati.dataentity.Car;
 import com.automati.dataentity.Person;
 import com.automati.repo.CarRepo;
 import com.automati.service.interfaces.CarServiceInterface;
 
+@Service
+@Transactional
 public class CarService implements CarServiceInterface {
 
 	@Autowired
@@ -16,32 +20,31 @@ public class CarService implements CarServiceInterface {
 	
 	@Override
 	public void saveCar(Car car) {
-		// TODO Auto-generated method stub
+		carRepo.save(car);
 
 	}
 
 	@Override
 	public Car getCar(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO update if not neeeded
+		return carRepo.getOne(index);
 	}
 
 	@Override
 	public List<Car> getCars(Person person) {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO get logger for class
+		return carRepo.findCarByPerson(person);
+		
 	}
 
 	@Override
 	public void updateCar(Car car) {
-		// TODO Auto-generated method stub
-
+		carRepo.saveAndFlush(car);
 	}
 
 	@Override
 	public void deleteCar(Car car) {
-		// TODO Auto-generated method stub
-
+		carRepo.delete(car);
 	}
 
 }

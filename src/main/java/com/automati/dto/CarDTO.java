@@ -1,97 +1,38 @@
-package com.automati.dataentity;
+package com.automati.dto;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import com.automati.dataentity.Color;
+import com.automati.dataentity.Condition;
+import com.automati.dataentity.EPA;
+import com.automati.dataentity.Feature;
+import com.automati.dataentity.Lease;
+import com.automati.dataentity.Model;
+import com.automati.dataentity.Person;
+import com.automati.dataentity.Review;
+import com.automati.dataentity.Transmission;
 
-@Entity
-@Table(name="car")
-public class Car {
-	
-	@Id
-	@Column(name="car_id")
-	@SequenceGenerator(name="carSeq", sequenceName="car_Seq", allocationSize=1)
-	@GeneratedValue(generator="carSeq", strategy=GenerationType.SEQUENCE)
+public class CarDTO implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1705468198474980763L;
 	private int id;
-	
-	@Column(name="car_year")
 	private int year;
-	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "model_id")
 	private Model model;
-	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "color_id")
 	private Color color;
-	
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "feature_id")
 	private List<Feature> feature;
-	
-	@OneToOne
-	@JoinColumn(name="transmission_id")
 	private Transmission transmission;
-	
-	@OneToOne
-	@JoinColumn(name="condition_id")
 	private Condition condition;
-	
-	@OneToOne
-	@JoinColumn(name="epa_id")
 	private EPA epa;
-	
-	@Column(name = "car_price")
 	private double price;
-	
-	@OneToOne
-	@JoinColumn(name="lease")
 	private Lease lease;
-	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name="review_id")
-	private List<Review> review = new ArrayList<Review>();
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="person_id")
+	private List<Review> review;
 	private Person person;
-
-	public Car() {
-	}
 	
-	public Car(int id) {
-		this.id = id;
-	}
-	
-	public Car(int year, Model model, Color color, List<Feature> feature, Transmission transmission,
-			Condition condition, EPA epa, double price, Lease lease, List<Review> review, Person person) {
-		this.year = year;
-		this.model = model;
-		this.color = color;
-		this.feature = feature;
-		this.transmission = transmission;
-		this.condition = condition;
-		this.epa = epa;
-		this.price = price;
-		this.lease = lease;
-		this.review = review;
-		this.person = person;
-	}
-
-	public Car(int id, int year, Model model, Color color, List<Feature> feature, Transmission transmission,
+	public CarDTO(int id, int year, Model model, Color color, List<Feature> feature, Transmission transmission,
 			Condition condition, EPA epa, double price, Lease lease, List<Review> review, Person person) {
 		this.id = id;
 		this.year = year;
@@ -201,10 +142,7 @@ public class Car {
 
 	public void setPerson(Person person) {
 		this.person = person;
-	}	
+	}
 	
 	
-
-	
-	 
 }

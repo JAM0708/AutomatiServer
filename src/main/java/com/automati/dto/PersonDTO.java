@@ -1,75 +1,42 @@
-package com.automati.dataentity;
+package com.automati.dto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import com.automati.dataentity.CreditCard;
+import com.automati.dataentity.Role;
+import com.automati.dataentity.State;
 
-@Entity
-@Table(name="person")
-public class Person {
+public class PersonDTO implements Serializable {
 
-	@Id
-	@Column(name="person_id")
-	@SequenceGenerator(name="personSeq", sequenceName="person_Seq", allocationSize=1)
-	@GeneratedValue(generator="personSeq", strategy=GenerationType.SEQUENCE)
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -576849559819299160L;
 	private int id;
-	
-	@Column(name="person_first_name")
 	private String firstName;
-	
-	@Column(name="person_last_name")
 	private String lastName;
-	
-	@Column(name="person_street")
 	private String street;
-	
-	@Column(name="person_city")
 	private String city;
-	
-	@Column(name="person_password")
 	private String password;
-	
-	@OneToOne
-	@JoinColumn(name="state_id")
 	private State state;
-	
-	@OneToOne
-	@JoinColumn(name="role_id")
 	private Role role;
-	
-	@OneToMany(fetch=FetchType.LAZY)
-	@JoinColumn(name="credit_id")
 	private List<CreditCard> creditCard = new ArrayList<CreditCard>();
 	
 	
-	
-	public Person() {
+	public PersonDTO() {
 	}
 	
 	
 
-
-
-	public Person(int id) {
+	public PersonDTO(int id) {
 		this.id = id;
 	}
 
 
 
-
-
-	public Person(int id, String firstName, String lastName, String street, String city, String password, State state,
+	public PersonDTO(int id, String firstName, String lastName, String street, String city, String password, State state,
 			Role role, List<CreditCard> creditCard) {
 		this.id = id;
 		this.firstName = firstName;
@@ -79,7 +46,7 @@ public class Person {
 		this.password = password;
 		this.state = state;
 		this.role = role;
-		this.creditCard = creditCard;
+		this.creditCard  = creditCard;
 	}
 
 
@@ -189,7 +156,6 @@ public class Person {
 	public void setCreditCard(List<CreditCard> creditCard) {
 		this.creditCard = creditCard;
 	}
-
 	
 	
 	
