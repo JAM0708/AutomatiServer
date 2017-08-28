@@ -12,5 +12,4 @@ import com.automati.dataentity.Person;
 public interface CarRepo extends JpaRepository<Car, Integer> {
 	
 	List<Car> findCarByPerson(Person person);
-
 }
