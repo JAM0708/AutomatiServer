@@ -42,6 +42,11 @@ public class PersonService implements PersonServiceInterface {
 	public Person getPerson(int index) {
 		return personRepo.findPersonByIndex(index);
 	}
+
+	@Override
+	public Person getPerson(String email, String password) {
+		return personRepo.findPersonByEmailAndPassword(email, password);
+	}
 	
 
 

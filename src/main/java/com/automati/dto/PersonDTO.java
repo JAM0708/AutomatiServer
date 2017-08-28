@@ -17,6 +17,7 @@ public class PersonDTO implements Serializable {
 	private int id;
 	private String firstName;
 	private String lastName;
+	private String email;
 	private String street;
 	private String city;
 	private String password;
@@ -35,20 +36,19 @@ public class PersonDTO implements Serializable {
 	}
 
 
-
-	public PersonDTO(int id, String firstName, String lastName, String street, String city, String password, State state,
-			Role role, List<CreditCard> creditCard) {
+	public PersonDTO(int id, String firstName, String lastName, String email, String street, String city,
+			String password, State state, Role role, List<CreditCard> creditCard) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.email = email;
 		this.street = street;
 		this.city = city;
 		this.password = password;
 		this.state = state;
 		this.role = role;
-		this.creditCard  = creditCard;
+		this.creditCard = creditCard;
 	}
-
 
 
 	public int getId() {
@@ -155,6 +155,18 @@ public class PersonDTO implements Serializable {
 
 	public void setCreditCard(List<CreditCard> creditCard) {
 		this.creditCard = creditCard;
+	}
+
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	

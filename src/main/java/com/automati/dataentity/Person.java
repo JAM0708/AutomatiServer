@@ -15,63 +15,63 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.automati.dto.PersonDTO;
+
 @Entity
-@Table(name="person")
+@Table(name = "person")
 public class Person {
 
 	@Id
-	@Column(name="person_id")
-	@SequenceGenerator(name="personSeq", sequenceName="person_Seq", allocationSize=1)
-	@GeneratedValue(generator="personSeq", strategy=GenerationType.SEQUENCE)
+	@Column(name = "person_id")
+	@SequenceGenerator(name = "personSeq", sequenceName = "person_Seq", allocationSize = 1)
+	@GeneratedValue(generator = "personSeq", strategy = GenerationType.SEQUENCE)
 	private int id;
-	
-	@Column(name="person_first_name")
+
+	@Column(name = "person_email")
+	private String email;
+
+	@Column(name = "person_first_name")
 	private String firstName;
-	
-	@Column(name="person_last_name")
+
+	@Column(name = "person_last_name")
 	private String lastName;
-	
-	@Column(name="person_street")
+
+	@Column(name = "person_street")
 	private String street;
-	
-	@Column(name="person_city")
+
+	@Column(name = "person_city")
 	private String city;
-	
-	@Column(name="person_password")
+
+	@Column(name = "person_password")
 	private String password;
-	
+
 	@OneToOne
-	@JoinColumn(name="state_id")
+	@JoinColumn(name = "state_id")
 	private State state;
-	
+
 	@OneToOne
-	@JoinColumn(name="role_id")
+	@JoinColumn(name = "role_id")
 	private Role role;
-	
-	@OneToMany(fetch=FetchType.LAZY)
-	@JoinColumn(name="credit_id")
+
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "credit_id")
 	private List<CreditCard> creditCard = new ArrayList<CreditCard>();
-	
-	
-	
+
 	public Person() {
 	}
-	
-	
-
-
 
 	public Person(int id) {
 		this.id = id;
 	}
 
+	public int getId() {
+		return id;
+	}
 
-
-
-
-	public Person(int id, String firstName, String lastName, String street, String city, String password, State state,
-			Role role, List<CreditCard> creditCard) {
+	public Person(int id, String email, String firstName, String lastName, String street, String city, String password,
+			State state, Role role, List<CreditCard> creditCard) {
 		this.id = id;
+		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.street = street;
@@ -81,117 +81,94 @@ public class Person {
 		this.role = role;
 		this.creditCard = creditCard;
 	}
-
-
-
-	public int getId() {
-		return id;
+	
+	public Person(PersonDTO personDTO) {
+		this.id = personDTO.getId();
+		this.email = personDTO.getEmail();
+		this.firstName = personDTO.getFirstName();
+		this.lastName = personDTO.getLastName();
+		this.street = personDTO.getStreet();
+		this.city = personDTO.getCity();
+		this.password = personDTO.getPassword();
+		this.state = personDTO.getState();
+		this.role = personDTO.getRole();
+		this.creditCard = personDTO.getCreditCard();
 	}
-
-
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-
-
 	public String getFirstName() {
 		return firstName;
 	}
-
-
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
-
-
 	public String getLastName() {
 		return lastName;
 	}
-
-
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
-
-
 	public String getStreet() {
 		return street;
 	}
-
-
 
 	public void setStreet(String street) {
 		this.street = street;
 	}
 
-
-
 	public String getCity() {
 		return city;
 	}
-
-
 
 	public void setCity(String city) {
 		this.city = city;
 	}
 
-
-
 	public String getPassword() {
 		return password;
 	}
-
-
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-
-
 	public State getState() {
 		return state;
 	}
-
-
 
 	public void setState(State state) {
 		this.state = state;
 	}
 
-
-
 	public Role getRole() {
 		return role;
 	}
-
-
 
 	public void setRole(Role role) {
 		this.role = role;
 	}
 
-
-
 	public List<CreditCard> getCreditCard() {
 		return creditCard;
 	}
-
-
 
 	public void setCreditCard(List<CreditCard> creditCard) {
 		this.creditCard = creditCard;
 	}
 
-	
-	
-	
-	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 }

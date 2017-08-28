@@ -2,6 +2,7 @@ package com.automati.service.interfaces;
 
 import java.util.List;
 
+import com.automati.dataentity.Car;
 import com.automati.dataentity.Person;
 
 public interface PersonServiceInterface {
@@ -15,5 +16,7 @@ public interface PersonServiceInterface {
 	public void updatePerson(Person person);
 	
 	public Person getPerson(int index);
+
+	public Person getPerson(String email, String password);
 	
 }
