@@ -7,7 +7,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.automati.dataentity.Person;
+import com.automati.dataentity.Role;
+import com.automati.dataentity.State;
+import com.automati.dataentity.ZipCode;
 import com.automati.repo.PersonRepo;
+import com.automati.repo.RoleRepo;
+import com.automati.repo.StateRepo;
+import com.automati.repo.ZipCodeRepo;
 import com.automati.service.interfaces.PersonServiceInterface;
 
 @Service
@@ -16,6 +22,15 @@ public class PersonService implements PersonServiceInterface {
 
 	@Autowired
 	private PersonRepo personRepo;
+	
+	@Autowired
+	private StateRepo stateRepo;
+	
+	@Autowired 
+	private ZipCodeRepo zipCodeRepo;
+	
+	@Autowired
+	private RoleRepo roleRepo;
 
 	@Override
 	public void savePerson(Person person) {
@@ -46,6 +61,21 @@ public class PersonService implements PersonServiceInterface {
 	@Override
 	public Person getPerson(String email, String password) {
 		return personRepo.findPersonByEmailAndPassword(email, password);
+	}
+
+	@Override
+	public void saveState(State state) {
+		stateRepo.save(state);
+	}
+
+	@Override
+	public void saveZipCode(ZipCode zipcode) {
+		zipCodeRepo.save(zipcode);
+	}
+
+	@Override
+	public void saveRole(Role role) {
+		roleRepo.save(role);
 	}
 	
 

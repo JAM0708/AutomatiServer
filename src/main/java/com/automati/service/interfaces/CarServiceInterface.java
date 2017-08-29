@@ -2,8 +2,7 @@ package com.automati.service.interfaces;
 
 import java.util.List;
 
-import com.automati.dataentity.Car;
-import com.automati.dataentity.Person;
+import com.automati.dataentity.*;
 
 public interface CarServiceInterface {
 	
@@ -16,5 +15,20 @@ public interface CarServiceInterface {
 	public void updateCar(Car car);
 	
 	public void deleteCar(Car car);
+	
+	public void saveTransmission(Transmission transmission);
+	
+	public void saveColor(Color color);
+	
+	public void saveFeature(Feature feature);
+	
+	public void saveLease(Lease lease);
+	
+	public void saveEPA(EPA epa);
+	
+	public void saveModel(Model model);
+	
+	public void saveCondition(Condition condition);
+	
 
 }

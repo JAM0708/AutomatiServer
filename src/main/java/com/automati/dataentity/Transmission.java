@@ -25,6 +25,11 @@ public class Transmission {
 		this.id = id;
 		this.name = name;
 	}
+	
+	public Transmission(String name)
+	{
+		this.name = name;
+	}
 
 	public Transmission() {
 	}
