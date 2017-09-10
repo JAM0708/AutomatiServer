@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.automati.dto.ConditionDTO;
+
 @Entity
 @Table(name="condition")
 public class Condition {
@@ -35,6 +37,12 @@ public class Condition {
 		this.type = type;
 		this.title = title;
 		this.mileage = mileage;
+	}
+	
+	public Condition(ConditionDTO conditionDTO) {
+		this.type = conditionDTO.getType();
+		this.title = conditionDTO.getTitle();
+		this.mileage = conditionDTO.getMileage();
 	}
 
 	public int getId() {

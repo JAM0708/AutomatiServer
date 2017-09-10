@@ -29,6 +29,10 @@ public class Feature {
 		this.description = description;
 	}
 
+	public Feature(String name) {
+		this.description = name;
+	}
+
 	public int getId() {
 		return id;
 	}

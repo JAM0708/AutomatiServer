@@ -29,6 +29,10 @@ public class Model {
 		this.name = name;
 	}
 
+	public Model(String name) {
+		this.name = name;
+	}
+
 	public int getId() {
 		return id;
 	}
