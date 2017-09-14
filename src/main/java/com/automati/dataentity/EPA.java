@@ -29,6 +29,10 @@ public class EPA {
 	public EPA() {
 	}
 
+	public EPA(int mileage) {
+		this.mileage = mileage;
+	}
+
 	public int getId() {
 		return id;
 	}

@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.automati.dto.LeaseDTO;
+
 @Entity
 @Table(name="lease")
 public class Lease {
@@ -41,6 +43,13 @@ public class Lease {
 		this.interestRate = interestRate;
 		this.length = length;
 		this.startDate = startDate;
+	}
+	
+	public Lease(LeaseDTO leaseDTO){
+		this.monthlyPayment = leaseDTO.getMonthlyPayment();
+		this.interestRate = leaseDTO.getInterestRate();
+		this.length = leaseDTO.getLength();
+		this.startDate = leaseDTO.getStartDate();
 	}
 
 	public int getId() {
