@@ -77,7 +77,7 @@ public class CarController {
 	@RequestMapping(path="/feature", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public void saveFeature(@RequestBody FeatureDTO featureDTO) {
-		Feature feature = new Feature(featureDTO.getName());
+		Feature feature = new Feature(1, featureDTO.getName());
 		carServiceInterface.saveFeature(feature);
 	}
 	

@@ -19,7 +19,7 @@ public class ModelDTO implements Serializable {
 	
 	
 
-	public ModelDTO(int String) {
+	public ModelDTO(String name) {
 		this.name = name;
 	}
 

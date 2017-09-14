@@ -19,7 +19,7 @@ public class TransmissionDTO implements Serializable {
 	
 	
 
-	public TransmissionDTO(int String) {
+	public TransmissionDTO(String name) {
 		this.name = name;
 	}
 

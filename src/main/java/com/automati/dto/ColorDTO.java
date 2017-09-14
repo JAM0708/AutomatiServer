@@ -19,7 +19,7 @@ public class ColorDTO implements Serializable {
 	
 	
 
-	public ColorDTO(int String) {
+	public ColorDTO(String name) {
 		this.name = name;
 	}
 
