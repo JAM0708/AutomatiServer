@@ -9,16 +9,16 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="feature")
+@Table(name = "feature")
 public class Feature {
-	
+
 	@Id
-	@Column(name="feature_id")
-	@SequenceGenerator(name="featureSeq", sequenceName="feature_Seq", allocationSize=1)
-	@GeneratedValue(generator="featureSeq", strategy=GenerationType.SEQUENCE)
+	@Column(name = "feature_id")
+	@SequenceGenerator(name = "featureSeq", sequenceName = "feature_Seq", allocationSize = 1)
+	@GeneratedValue(generator = "featureSeq", strategy = GenerationType.SEQUENCE)
 	private int id;
-	
-	@Column(name="feature_description")
+
+	@Column(name = "feature_description")
 	private String description;
 
 	public Feature() {
@@ -47,6 +47,11 @@ public class Feature {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Override
+	public String toString() {
+		return "Feature [id=" + id + ", description=" + description + "]";
 	}
 	
 	

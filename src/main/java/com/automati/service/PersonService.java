@@ -44,7 +44,7 @@ public class PersonService implements PersonServiceInterface {
 
 	@Override
 	public List<Person> getPeople() {
-		return personRepo.findPeople();
+		return personRepo.findAll();
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class PersonService implements PersonServiceInterface {
 
 	@Override
 	public Person getPerson(int index) {
-		return personRepo.findPersonByIndex(index);
+		return personRepo.findOne(index);
 	}
 
 	@Override
