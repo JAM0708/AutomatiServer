@@ -3,6 +3,7 @@ package com.automati.dataentity;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,8 +28,7 @@ public class State {
 	@Column(name = "name", nullable = false, unique = true)
 	private String name;
 	
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "zipcode_id")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy= "state", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<ZipCode> code = new HashSet<ZipCode>();
 
 	public State() {
@@ -36,6 +36,13 @@ public class State {
 
 	public State(int id, String name, Set<ZipCode> code) {
 		this.id = id;
+		this.name = name;
+		this.code = code;
+	}
+	
+	
+
+	public State(String name, Set<ZipCode> code) {
 		this.name = name;
 		this.code = code;
 	}

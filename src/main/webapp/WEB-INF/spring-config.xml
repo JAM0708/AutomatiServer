@@ -58,7 +58,22 @@
 			</props>
 		</property>
 	</bean>
+	<bean id="emailTemplateResolver" class="org.thymeleaf.templateresolver.ClassLoaderTemplateResolver">
+        <property name="prefix" value="mail/" />
+        <property name="suffix" value=".html" />
+        <property name="templateMode" value="HTML5"/>
+        <property name="cacheable" value="false" />
+        <property name="characterEncoding" value="UTF-8" />
+        <property name="order" value="1"/>
+</bean>
+
+	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+		<property name="templateResolver" ref="emailTemplateResolver" />
+	</bean>
 	
+	  <bean id="templateViewResolver" class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+		<property name="templateEngine" ref="templateEngine" />
+	</bean> 
 	
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />

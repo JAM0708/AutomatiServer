@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,18 +30,22 @@ import com.automati.dto.ModelDTO;
 import com.automati.dto.PersonDTO;
 import com.automati.dto.TransmissionDTO;
 import com.automati.service.interfaces.CarServiceInterface;
+import com.automati.service.interfaces.PersonServiceInterface;
 
 @RestController
 public class CarController {
 	
 	@Autowired
-	CarServiceInterface carServiceInterface;
+	CarServiceInterface carService;
 	
-	@RequestMapping(path="/cars", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Autowired
+	PersonServiceInterface personService;
+	
+	@RequestMapping(path="/cars", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Car> getListofCarsByUser(@RequestBody PersonDTO personDTO) {
-		Person person = new Person(personDTO.getId());
-		return carServiceInterface.getCars(person);
+	public List<Car> getListofCarsByUser(@RequestParam("email") String email) {
+		Person person = personService.findPersonByEmail(email);
+		return carService.getCars(person);
 	}
 	
 	@RequestMapping(path="/car", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -50,56 +55,56 @@ public class CarController {
 				carDTO.getFeature(), carDTO.getTransmission(), carDTO.getCondition(),
 				carDTO.getEpa(), carDTO.getPrice(), carDTO.getLease(), 
 				carDTO.getReview(), carDTO.getPerson());
-		carServiceInterface.saveCar(car);
+		carService.saveCar(car);
 	}
 	
 	@RequestMapping(path="/model", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public void saveModel(@RequestBody ModelDTO modelDTO) {
 		Model model = new Model(modelDTO.getName());
-		carServiceInterface.saveModel(model);
+		carService.saveModel(model);
 	}
 	
 	@RequestMapping(path="/transmission", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public void saveTransmission(@RequestBody TransmissionDTO transmissionDTO) {
 		Transmission transmisson = new Transmission(transmissionDTO.getName());
-		carServiceInterface.saveTransmission(transmisson);
+		carService.saveTransmission(transmisson);
 	}
 	
 	@RequestMapping(path="/color", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public void saveColor(@RequestBody ColorDTO colorDTO) {
 		Color color = new Color(colorDTO.getName());
-		carServiceInterface.saveColor(color);
+		carService.saveColor(color);
 	}
 	
 	@RequestMapping(path="/feature", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public void saveFeature(@RequestBody FeatureDTO featureDTO) {
-		Feature feature = new Feature(1, featureDTO.getName());
-		carServiceInterface.saveFeature(feature);
+		Feature feature = new Feature(featureDTO.getName());
+		carService.saveFeature(feature);
 	}
 	
 	@RequestMapping(path="/lease", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public void saveLease(@RequestBody LeaseDTO leaseDTO) {
 		Lease feature = new Lease(leaseDTO);
-		carServiceInterface.saveLease(feature);
+		carService.saveLease(feature);
 	}
 	
 	@RequestMapping(path="/epa", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public void saveEPA(@RequestBody EPADTO epaDTO) {
 		EPA epa = new EPA(epaDTO.getMileage());
-		carServiceInterface.saveEPA(epa);
+		carService.saveEPA(epa);
 	}
 	
 	@RequestMapping(path="/condition", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public void saveCondition(@RequestBody ConditionDTO conditionDTO) {
 		Condition condition = new Condition(conditionDTO);
-		carServiceInterface.saveCondition(condition);
+		carService.saveCondition(condition);
 	}
 	
 	

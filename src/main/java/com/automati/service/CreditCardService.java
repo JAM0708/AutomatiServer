@@ -33,6 +33,11 @@ public class CreditCardService implements CreditCardServiceInterface{
 		cardRepo.saveAndFlush(card);
 	}
 
+	@Override
+	public List<CreditCard> findCreditCardsByUser(Person person) {
+		return cardRepo.findCreditCardByPerson(person);
+	}
+
 	
 	
 }

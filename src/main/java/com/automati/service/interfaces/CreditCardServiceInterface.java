@@ -12,4 +12,5 @@ public interface CreditCardServiceInterface {
 	
 	public void updateCard(CreditCard card);
 	
+	public List<CreditCard> findCreditCardsByUser(Person person);
 }

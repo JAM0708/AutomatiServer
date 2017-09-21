@@ -39,8 +39,7 @@ public class Car {
 	@JoinColumn(name = "color_id")
 	private Color color;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "feature_id")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy= "car", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Feature> feature;
 	
 	@OneToOne

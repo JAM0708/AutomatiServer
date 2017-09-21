@@ -22,13 +22,21 @@ public class Role {
 	@GeneratedValue(generator="roleSeq", strategy=GenerationType.SEQUENCE)
 	private int id;
 	
-	@Column(name="role_name")
+	@Column(name="role_name", unique = true)
 	private String name;
 
 	public Role(int id, String name) {
 		this.id = id;
 		this.name = name;
 	}
+	
+	
+
+	public Role(String name) {
+		this.name = name;
+	}
+
+
 
 	public int getId() {
 		return id;
