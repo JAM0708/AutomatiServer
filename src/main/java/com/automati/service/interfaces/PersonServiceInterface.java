@@ -20,7 +20,7 @@ public interface PersonServiceInterface {
 	
 	public Person getPerson(int index);
 
-	public Person getPerson(String email, String password);
+	public String getLoginToken(String email, String password);
 	
 	public void saveState(State state);
 	
@@ -28,4 +28,13 @@ public interface PersonServiceInterface {
 	
 	public void saveRole(Role role);
 	
+	public List<ZipCode> getStateWithZipCodes(State state);
+	
+	public List<State> getAllStates();
+	
+	public Person findPersonByEmail(String email);
+	
+	public State findStateByName(String name);
+	
+	public Role findRoleByName(String name);
 }

@@ -3,6 +3,7 @@ package com.automati.dataentity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,7 +28,7 @@ public class Person {
 	@GeneratedValue(generator = "personSeq", strategy = GenerationType.SEQUENCE)
 	private int id;
 
-	@Column(name = "person_email")
+	@Column(name = "person_email", unique = true)
 	private String email;
 
 	@Column(name = "person_first_name")
@@ -46,15 +47,14 @@ public class Person {
 	private String password;
 
 	@OneToOne
-	@JoinColumn(name = "state_id")
+	@JoinColumn(name = "state_id", nullable= true)
 	private State state;
 
 	@OneToOne
 	@JoinColumn(name = "role_id")
 	private Role role;
 
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "credit_id")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy= "person", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<CreditCard> creditCard = new ArrayList<CreditCard>();
 
 	public Person() {
@@ -82,7 +82,7 @@ public class Person {
 		this.creditCard = creditCard;
 	}
 	
-	public Person(PersonDTO personDTO) {
+	public Person(PersonDTO personDTO, State state, Role role) {
 		this.id = personDTO.getId();
 		this.email = personDTO.getEmail();
 		this.firstName = personDTO.getFirstName();
@@ -90,9 +90,8 @@ public class Person {
 		this.street = personDTO.getStreet();
 		this.city = personDTO.getCity();
 		this.password = personDTO.getPassword();
-		this.state = personDTO.getState();
-		this.role = personDTO.getRole();
-		this.creditCard = personDTO.getCreditCard();
+		this.state = state;
+		this.role = role;
 	}
 
 	public void setId(int id) {
@@ -170,5 +169,14 @@ public class Person {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	@Override
+	public String toString() {
+		return "Person [email=" + email + ", firstName=" + firstName + ", lastName=" + lastName + ", street=" + street
+				+ ", city=" + city + ", password=" + password + ", state=" + state + ", role=" + role + ", creditCard="
+				+ creditCard + "]";
+	}
+	
+	
 
 }

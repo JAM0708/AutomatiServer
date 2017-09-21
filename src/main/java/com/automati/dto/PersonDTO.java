@@ -21,9 +21,9 @@ public class PersonDTO implements Serializable {
 	private String street;
 	private String city;
 	private String password;
-	private State state;
-	private Role role;
-	private List<CreditCard> creditCard = new ArrayList<CreditCard>();
+	private StateDTO state;
+	private RoleDTO role;
+	private List<CreditCardDTO> creditCard = new ArrayList<CreditCardDTO>();
 	
 	
 	public PersonDTO() {
@@ -31,13 +31,8 @@ public class PersonDTO implements Serializable {
 	
 	
 
-	public PersonDTO(int id) {
-		this.id = id;
-	}
-
-
 	public PersonDTO(int id, String firstName, String lastName, String email, String street, String city,
-			String password, State state, Role role, List<CreditCard> creditCard) {
+			String password, StateDTO state, RoleDTO role, List<CreditCardDTO> creditCard) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -49,6 +44,46 @@ public class PersonDTO implements Serializable {
 		this.role = role;
 		this.creditCard = creditCard;
 	}
+	
+	
+
+
+
+	public PersonDTO(String firstName, String lastName, String email, String street, String city, String password,
+			StateDTO state, RoleDTO role, List<CreditCardDTO> creditCard) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.street = street;
+		this.city = city;
+		this.password = password;
+		this.state = state;
+		this.role = role;
+		this.creditCard = creditCard;
+	}
+	
+	
+
+
+
+	public PersonDTO(String firstName, String lastName, String email, String street, String city, String password,
+			StateDTO state, RoleDTO role) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.street = street;
+		this.city = city;
+		this.password = password;
+		this.state = state;
+		this.role = role;
+	}
+
+
+
+	public PersonDTO(int id) {
+		this.id = id;
+	}
+
 
 
 	public int getId() {
@@ -121,39 +156,37 @@ public class PersonDTO implements Serializable {
 		this.password = password;
 	}
 
-
-
-	public State getState() {
+	public StateDTO getState() {
 		return state;
 	}
 
 
 
-	public void setState(State state) {
+	public void setState(StateDTO state) {
 		this.state = state;
 	}
 
 
 
-	public Role getRole() {
+	public RoleDTO getRole() {
 		return role;
 	}
 
 
 
-	public void setRole(Role role) {
+	public void setRole(RoleDTO role) {
 		this.role = role;
 	}
 
 
 
-	public List<CreditCard> getCreditCard() {
+	public List<CreditCardDTO> getCreditCard() {
 		return creditCard;
 	}
 
 
 
-	public void setCreditCard(List<CreditCard> creditCard) {
+	public void setCreditCard(List<CreditCardDTO> creditCard) {
 		this.creditCard = creditCard;
 	}
 

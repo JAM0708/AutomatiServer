@@ -11,4 +11,5 @@ import com.automati.dataentity.Person;
 @Repository
 public interface CreditCardRepo extends JpaRepository<CreditCard, Integer> {	
 	
+	List<CreditCard> findCreditCardByPerson(Person person);
 }

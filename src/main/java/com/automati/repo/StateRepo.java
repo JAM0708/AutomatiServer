@@ -8,4 +8,5 @@ import com.automati.dataentity.State;
 @Repository
 public interface StateRepo extends JpaRepository<State, Integer> {
 
+	State findStateByName(String name);
 }

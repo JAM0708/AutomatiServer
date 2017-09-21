@@ -3,9 +3,12 @@ package com.automati.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.automati.config.security.JWTUtils;
 import com.automati.dataentity.Person;
 import com.automati.dataentity.Role;
 import com.automati.dataentity.State;
@@ -31,9 +34,18 @@ public class PersonService implements PersonServiceInterface {
 	
 	@Autowired
 	private RoleRepo roleRepo;
+	
+	@Autowired
+	@Qualifier("brcypt")
+	private BCryptPasswordEncoder passwordEncoder;
+	
+	/*@Autowired
+	@Qualifier("jwtutils")
+	JWTUtils jwtUtils;*/
 
 	@Override
 	public void savePerson(Person person) {
+		person.setPassword(passwordEncoder.encode(person.getPassword()));
 		personRepo.save(person);
 	}
 
@@ -59,13 +71,19 @@ public class PersonService implements PersonServiceInterface {
 	}
 
 	@Override
-	public Person getPerson(String email, String password) {
-		return personRepo.findPersonByEmailAndPassword(email, password);
+	public String getLoginToken(String email, String password) {
+		Person person =personRepo.findPersonByEmail(email);
+		String token = "No User Found";
+		if(person != null && passwordEncoder.matches(password, person.getPassword()) ) {
+			JWTUtils jwtUtils = new JWTUtils();
+			token = jwtUtils.createJWT(person.getId() + "", "Automati Server", 100000, person);
+		}
+		return token;
 	}
 
 	@Override
 	public void saveState(State state) {
-		stateRepo.save(state);
+		stateRepo.saveAndFlush(state);
 	}
 
 	@Override
@@ -77,7 +95,33 @@ public class PersonService implements PersonServiceInterface {
 	public void saveRole(Role role) {
 		roleRepo.save(role);
 	}
-	
 
+	@Override
+	public List<ZipCode> getStateWithZipCodes(State state) {
+		return zipCodeRepo.findZipCodeByState(state);
+	}
+
+	@Override
+	public List<State> getAllStates() {
+		return stateRepo.findAll();
+	}
+
+	@Override
+	public Person findPersonByEmail(String email) {
+		return personRepo.findPersonByEmail(email);
+	}
+
+	@Override
+	public State findStateByName(String name) {
+		return stateRepo.findStateByName(name);
+	}
+
+	@Override
+	public Role findRoleByName(String name) {
+		return roleRepo.findRoleByName(name);
+	}
+	
+	
+	
 
 }

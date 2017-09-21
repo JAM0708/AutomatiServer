@@ -2,11 +2,17 @@ package com.automati.dataentity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name="zipcode")
@@ -19,14 +25,29 @@ public class ZipCode {
 	private int id;
 
 	@Column(name = "code", nullable = false, unique = true)
-	private int code;
-
+	private String code;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="stateId")
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private State state;
+	
 	public ZipCode() {
 	}
 
-	public ZipCode(int id, int code) {
+	public ZipCode(int id, String code) {
 		this.id = id;
 		this.code = code;
+	}
+	
+	
+	public ZipCode(String code) {
+		this.code = code;
+	}
+
+	public ZipCode(String code, State state) {
+		this.code = code;
+		this.state = state;
 	}
 
 	public int getId() {
@@ -37,12 +58,20 @@ public class ZipCode {
 		this.id = id;
 	}
 
-	public int getCode() {
+	public String getCode() {
 		return code;
 	}
 
-	public void setCode(int code) {
+	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
 	}
 	
 	

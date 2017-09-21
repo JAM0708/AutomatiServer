@@ -2,11 +2,17 @@ package com.automati.dataentity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "feature")
@@ -20,17 +26,30 @@ public class Feature {
 
 	@Column(name = "feature_description")
 	private String description;
-
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="carId", nullable = true)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private Car car;
+	
 	public Feature() {
-	}
+	}	
 
-	public Feature(int id, String description) {
+	public Feature(int id, String description, Car car) {
 		this.id = id;
+		this.description = description;
+		this.car = car;
+	}
+	
+	
+	
+	public Feature(String description) {
 		this.description = description;
 	}
 
-	public Feature(String name) {
-		this.description = name;
+	public Feature(String description, Car car) {
+		this.description = description;
+		this.car = car;
 	}
 
 	public int getId() {
@@ -47,6 +66,14 @@ public class Feature {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public Car getCar() {
+		return car;
+	}
+
+	public void setCar(Car car) {
+		this.car = car;
 	}
 
 	@Override

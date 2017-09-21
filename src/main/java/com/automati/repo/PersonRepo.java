@@ -11,5 +11,7 @@ import com.automati.dataentity.Person;
 public interface PersonRepo extends JpaRepository<Person, Integer> {
 
 	Person findPersonByEmailAndPassword(String email, String password);
+	
+	Person findPersonByEmail(String email);
 
 }

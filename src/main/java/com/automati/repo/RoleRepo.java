@@ -7,5 +7,6 @@ import com.automati.dataentity.Role;
 
 @Repository
 public interface RoleRepo extends JpaRepository<Role, Integer> {
-
+	
+	Role findRoleByName(String name);
 }
