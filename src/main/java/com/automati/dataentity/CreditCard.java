@@ -27,7 +27,7 @@ public class CreditCard {
 	@GeneratedValue(generator = "cardSeq", strategy = GenerationType.SEQUENCE)
 	private int id;
 
-	@Column(name = "number", nullable = false, unique = true)
+	@Column(name = "num", nullable = false, unique = true)
 	@Size(min=16,max=16)
 	private int number;
 	
@@ -38,7 +38,7 @@ public class CreditCard {
 	private int csc;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="person_id")
+	@JoinColumn(name="person_id", nullable= true)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Person person;
 	
