@@ -20,7 +20,7 @@
 	<mvc:annotation-driven></mvc:annotation-driven>
 	<tx:annotation-driven />
 	<mvc:cors>
-		<mvc:mapping path="/**" allowed-methods="GET, POST, PUT" allowed-origins="localhost:4200" />
+		<mvc:mapping path="/**" allowed-methods="GET, POST, PUT"   allow-credentials="false"  allowed-origins="localhost:4200" />
 	</mvc:cors>
 	
 	<bean id="dataSource"
