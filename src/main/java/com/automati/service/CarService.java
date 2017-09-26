@@ -2,7 +2,6 @@ package com.automati.service;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,33 +23,27 @@ public class CarService implements CarServiceInterface {
 
 	@Autowired
 	private CarRepo carRepo;
-	
+
 	@Autowired
 	private TransmissionRepo transmissionRepo;
-	
+
 	@Autowired
 	private ColorRepo colorRepo;
-	
+
 	@Autowired
 	private FeatureRepo featureRepo;
-	
+
 	@Autowired
 	private LeaseRepo leaseRepo;
-	
+
 	@Autowired
 	private EpaRepo epaRepo;
-	
+
 	@Autowired
 	private ModelRepo modelRepo;
-	
+
 	@Autowired
 	private ConditionRepo conditionRepo;
-	
-	@Override
-	public void saveCar(Car car) {
-		carRepo.save(car);
-
-	}
 
 	@Override
 	public Car getCar(int index) {
@@ -62,52 +55,43 @@ public class CarService implements CarServiceInterface {
 	public List<Car> getCars(Person person) {
 		// TODO get logger for class
 		return carRepo.findCarByPerson(person);
-		
+
 	}
 
 	@Override
-	public void updateCar(Car car) {
-		carRepo.saveAndFlush(car);
+	public <T> void save(T object) {
+		if (object instanceof Car) {
+			carRepo.save((Car) object);
+		} else if (object instanceof Transmission) {
+			transmissionRepo.save((Transmission) object);
+		} else if (object instanceof Color) {
+			colorRepo.save((Color) object);
+		} else if (object instanceof Feature) {
+			featureRepo.save((Feature) object);
+		} else if (object instanceof Lease) {
+			leaseRepo.save((Lease) object);
+		} else if (object instanceof EPA) {
+			epaRepo.save((EPA) object);
+		} else if (object instanceof Model) {
+			modelRepo.save((Model) object);
+		} else if (object instanceof Condition) {
+			conditionRepo.save((Condition) object);
+		}
 	}
 
 	@Override
-	public void deleteCar(Car car) {
-		carRepo.delete(car);
+	public <T> void delete(T object) {
+		if (object instanceof Car) {
+			carRepo.delete((Car) object);
+		}
 	}
 
 	@Override
-	public void saveTransmission(Transmission transmission) {
-		transmissionRepo.save(transmission);
+	public <T> void update(T object) {
+		if (object instanceof Car) {
+			carRepo.save((Car) object);
+		}
+
 	}
 
-	@Override
-	public void saveColor(Color color) {
-		colorRepo.save(color);
-	}
-
-	@Override
-	public void saveFeature(Feature feature) {
-		featureRepo.save(feature);
-	}
-
-	@Override
-	public void saveLease(Lease lease) {
-		leaseRepo.save(lease);		
-	}
-
-	@Override
-	public void saveEPA(EPA epa) {
-		epaRepo.save(epa);
-	}
-
-	@Override
-	public void saveModel(Model model) {
-		modelRepo.save(model);
-	}
-
-	@Override
-	public void saveCondition(Condition condition) {
-		conditionRepo.save(condition);
-	}
-	
 }

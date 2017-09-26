@@ -19,50 +19,37 @@ import com.automati.repo.StateRepo;
 import com.automati.repo.ZipCodeRepo;
 import com.automati.service.interfaces.PersonServiceInterface;
 
+import javassist.expr.Instanceof;
+
 @Service
 @Transactional
 public class PersonService implements PersonServiceInterface {
 
 	@Autowired
 	private PersonRepo personRepo;
-	
+
 	@Autowired
 	private StateRepo stateRepo;
-	
-	@Autowired 
+
+	@Autowired
 	private ZipCodeRepo zipCodeRepo;
-	
+
 	@Autowired
 	private RoleRepo roleRepo;
-	
+
 	@Autowired
 	@Qualifier("brcypt")
 	private BCryptPasswordEncoder passwordEncoder;
-	
-	/*@Autowired
-	@Qualifier("jwtutils")
-	JWTUtils jwtUtils;*/
 
-	@Override
-	public void savePerson(Person person) {
-		person.setPassword(passwordEncoder.encode(person.getPassword()));
-		personRepo.save(person);
-	}
-
-	@Override
-	public void deletePerson(Person person) {
-		personRepo.delete(person);
-	}
+	/*
+	 * @Autowired
+	 * 
+	 * @Qualifier("jwtutils") JWTUtils jwtUtils;
+	 */
 
 	@Override
 	public List<Person> getPeople() {
 		return personRepo.findAll();
-	}
-
-	@Override
-	public void updatePerson(Person person) {
-		personRepo.saveAndFlush(person);
-		
 	}
 
 	@Override
@@ -72,28 +59,13 @@ public class PersonService implements PersonServiceInterface {
 
 	@Override
 	public String getLoginToken(String email, String password) {
-		Person person =personRepo.findPersonByEmail(email);
+		Person person = personRepo.findPersonByEmail(email);
 		String token = "No User Found";
-		if(person != null && passwordEncoder.matches(password, person.getPassword()) ) {
+		if (person != null && passwordEncoder.matches(password, person.getPassword())) {
 			JWTUtils jwtUtils = new JWTUtils();
 			token = jwtUtils.createJWT(person.getId() + "", "Automati Server", 100000, person);
 		}
 		return token;
-	}
-
-	@Override
-	public void saveState(State state) {
-		stateRepo.saveAndFlush(state);
-	}
-
-	@Override
-	public void saveZipCode(ZipCode zipcode) {
-		zipCodeRepo.save(zipcode);
-	}
-
-	@Override
-	public void saveRole(Role role) {
-		roleRepo.save(role);
 	}
 
 	@Override
@@ -120,8 +92,40 @@ public class PersonService implements PersonServiceInterface {
 	public Role findRoleByName(String name) {
 		return roleRepo.findRoleByName(name);
 	}
-	
-	
-	
+
+	@Override
+	public <T> void save(T object) {
+		if (object instanceof State) {
+
+			stateRepo.save((State) object);
+		} else if (object instanceof Role) {
+
+			roleRepo.save((Role) object);
+		} else if (object instanceof ZipCode) {
+
+			zipCodeRepo.save((ZipCode) object);
+		} else if (object instanceof Person) {
+
+			Person person = (Person) object;
+			person.setPassword(passwordEncoder.encode(person.getPassword()));
+			personRepo.save(person);
+
+		}
+	}
+
+	@Override
+	public <T> void delete(T object) {
+		if (object instanceof Person) {
+			personRepo.delete((Person) object);
+		}
+
+	}
+
+	@Override
+	public <T> void update(T object) {
+		if (object instanceof Person) {
+			personRepo.save((Person) object);
+		}
+	}
 
 }

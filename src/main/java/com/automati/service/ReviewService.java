@@ -17,25 +17,31 @@ public class ReviewService implements ReviewServiceInterface {
 
 	@Autowired
 	private ReviewRepo reviewRepo;
-	
-	@Override
-	public void addReview(Review review) {
-		reviewRepo.save(review);
-	}
-
-	@Override
-	public void updateReview(Review review) {
-		reviewRepo.saveAndFlush(review);
-	}
-
-	@Override
-	public void deleteReview(Review review) {
-		reviewRepo.delete(review);
-	}
 
 	@Override
 	public List<Review> getReviews(Person person) {
 		return reviewRepo.findReviewsByPerson(person);
+	}
+
+	@Override
+	public <T> void save(T object) {
+		if (object instanceof Review) {
+			reviewRepo.save((Review) object);
+		}
+	}
+
+	@Override
+	public <T> void delete(T object) {
+		if (object instanceof Review) {
+			reviewRepo.delete((Review) object);
+		}
+	}
+
+	@Override
+	public <T> void update(T object) {
+		if (object instanceof Review) {
+			reviewRepo.save((Review) object);
+		}
 	}
 
 }

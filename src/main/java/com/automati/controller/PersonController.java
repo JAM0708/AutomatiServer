@@ -56,14 +56,14 @@ public class PersonController {
 		State state = personService.findStateByName(personDTO.getState().getName());
 		Role role = personService.findRoleByName(personDTO.getRole().getName());
 		Person person = new Person(personDTO, state, role);
-		personService.savePerson(person);
+		personService.save(person);
 	}
 	
 	@RequestMapping(path="/creditCard", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public void saveCreditCards(@RequestBody CreditCardDTO creditCardDTO) {
 		Person person = personService.findPersonByEmail(creditCardDTO.getOwner().getEmail());
 		CreditCard creditCard = new CreditCard(creditCardDTO.getNumber(),  creditCardDTO.getExpDate(), creditCardDTO.getCsc(), person);
-		creditCardService.saveCard(creditCard);
+		creditCardService.save(creditCard);
 		
 	}
 	
@@ -79,13 +79,13 @@ public class PersonController {
 		Set<ZipCode> codes = new HashSet<>();
 		logger.info(stateDTO.toString());
 		State state = new State(stateDTO.getName(), codes);
-		personService.saveState(state);
+		personService.save(state);
 		Iterator<ZipCodeDTO> itr = stateDTO.getCodes().iterator();
 		while(itr.hasNext()) {
 			ZipCode zipcode = new ZipCode(itr.next().getCode());
 			zipcode.setState(state);
 			state.getCode().add(zipcode);
-			personService.saveZipCode(zipcode);
+			personService.save(zipcode);
 		}
 		logger.info("ZipCodeList Size " + codes.size());
 	}
@@ -93,7 +93,7 @@ public class PersonController {
 	@RequestMapping(path="/role", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public void saveRole(@RequestBody RoleDTO roleDTO) {
 		Role role = new Role(roleDTO.getName());
-		personService.saveRole(role);
+		personService.save(role);
 	}
 	
 	@RequestMapping(path="/state", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
