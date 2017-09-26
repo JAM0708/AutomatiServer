@@ -13,31 +13,32 @@ import com.automati.service.interfaces.CreditCardServiceInterface;
 
 @Service
 @Transactional
-public class CreditCardService implements CreditCardServiceInterface{
-	
+public class CreditCardService implements CreditCardServiceInterface {
+
 	@Autowired
 	private CreditCardRepo cardRepo;
-	
-	@Override
-	public void saveCard(CreditCard card) {
-		cardRepo.save(card);
-	}
-
-	@Override
-	public void deleteCard(CreditCard card) {
-		cardRepo.delete(card);
-	}
-
-	@Override
-	public void updateCard(CreditCard card) {
-		cardRepo.saveAndFlush(card);
-	}
 
 	@Override
 	public List<CreditCard> findCreditCardsByUser(Person person) {
 		return cardRepo.findCreditCardByPerson(person);
 	}
 
-	
-	
+	@Override
+	public <T> void save(T object) {
+		if (object instanceof CreditCard) {
+			cardRepo.save((CreditCard) object);
+		}
+	}
+
+	@Override
+	public <T> void delete(T object) {
+
+	}
+
+	@Override
+	public <T> void update(T object) {
+		// TODO Auto-generated method stub
+
+	}
+
 }
