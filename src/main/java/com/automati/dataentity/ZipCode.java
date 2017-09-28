@@ -27,7 +27,7 @@ public class ZipCode {
 	@Column(name = "code", nullable = false, unique = true)
 	private String code;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="stateId")
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private State state;

@@ -14,6 +14,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="state")
 public class State {
@@ -27,7 +33,9 @@ public class State {
 	@Column(name = "name", nullable = false, unique = true)
 	private String name;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy= "state", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy= "state",  orphanRemoval = true)
+	@Fetch(FetchMode.SUBSELECT)
+	@JsonIgnore
 	private Set<ZipCode> code = new HashSet<ZipCode>();
 
 	public State() {
