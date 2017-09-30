@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="zipcode")
 public class ZipCode {
@@ -27,9 +29,10 @@ public class ZipCode {
 	@Column(name = "code", nullable = false, unique = true)
 	private String code;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="stateId")
 	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
 	private State state;
 	
 	public ZipCode() {

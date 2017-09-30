@@ -14,16 +14,11 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.InputStreamSource;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-
-import com.automati.controller.PersonController;
 import com.automati.dataentity.Person;
 
 @Aspect
@@ -38,7 +33,7 @@ public class MailingAspect {
 	@Autowired
 	private TemplateEngine templateEngine;
 
-	@Pointcut("execution(* com.automati.service.PersonService.savePerson(..))")
+	@Pointcut("execution(* com.automati.repo.PersonRepo.save(..))")
 	private void forRegisterUser() {
 	}
 

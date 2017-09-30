@@ -3,11 +3,13 @@ package com.automati.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.automati.dataentity.CreditCard;
 import com.automati.dataentity.Person;
+import com.automati.dto.StatusCheck;
 import com.automati.repo.CreditCardRepo;
 import com.automati.service.interfaces.CreditCardServiceInterface;
 
@@ -17,6 +19,10 @@ public class CreditCardService implements CreditCardServiceInterface {
 
 	@Autowired
 	private CreditCardRepo cardRepo;
+	
+	@Autowired
+	@Qualifier("status-check")
+	private StatusCheck status;
 
 	@Override
 	public List<CreditCard> findCreditCardsByUser(Person person) {
@@ -24,9 +30,14 @@ public class CreditCardService implements CreditCardServiceInterface {
 	}
 
 	@Override
-	public <T> void save(T object) {
+	public <T> StatusCheck save(T object) {
 		if (object instanceof CreditCard) {
 			cardRepo.save((CreditCard) object);
+			status.setPassedTrue();
+			return status;
+		} else {
+			status.setPassedFalse();
+			return status;
 		}
 	}
 

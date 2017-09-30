@@ -29,6 +29,7 @@ import com.automati.dto.CreditCardDTO;
 import com.automati.dto.PersonDTO;
 import com.automati.dto.RoleDTO;
 import com.automati.dto.StateDTO;
+import com.automati.dto.StatusCheck;
 import com.automati.dto.ZipCodeDTO;
 import com.automati.service.interfaces.CreditCardServiceInterface;
 import com.automati.service.interfaces.PersonServiceInterface;
@@ -52,18 +53,19 @@ public class PersonController {
 	}
 	
 	@RequestMapping(path="/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void register(@RequestBody PersonDTO personDTO) {
+	@ResponseBody
+	public StatusCheck register(@RequestBody PersonDTO personDTO) {
 		State state = personService.findStateByName(personDTO.getState().getName());
 		Role role = personService.findRoleByName(personDTO.getRole().getName());
 		Person person = new Person(personDTO, state, role);
-		personService.save(person);
+		return personService.save(person);
 	}
 	
 	@RequestMapping(path="/creditCard", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void saveCreditCards(@RequestBody CreditCardDTO creditCardDTO) {
+	public StatusCheck  saveCreditCards(@RequestBody CreditCardDTO creditCardDTO) {
 		Person person = personService.findPersonByEmail(creditCardDTO.getOwner().getEmail());
 		CreditCard creditCard = new CreditCard(creditCardDTO.getNumber(),  creditCardDTO.getExpDate(), creditCardDTO.getCsc(), person);
-		creditCardService.save(creditCard);
+		return creditCardService.save(creditCard);
 		
 	}
 	
@@ -73,9 +75,17 @@ public class PersonController {
 		Person person = personService.findPersonByEmail(userEmail);
 		return creditCardService.findCreditCardsByUser(person);
 	}
+	
+	@RequestMapping(path="/zipcode", method = RequestMethod.GET,  produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<ZipCode> findZipCodesByState(@RequestParam("state") String stateName) {
+		State state = personService.findStateByName(stateName);
+		return personService.getStateWithZipCodes(state);
+	}
 
 	@RequestMapping(path="/state", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void saveState(@RequestBody StateDTO stateDTO) {
+	@ResponseBody
+	public StatusCheck  saveState(@RequestBody StateDTO stateDTO) {
 		Set<ZipCode> codes = new HashSet<>();
 		logger.info(stateDTO.toString());
 		State state = new State(stateDTO.getName(), codes);
@@ -88,12 +98,14 @@ public class PersonController {
 			personService.save(zipcode);
 		}
 		logger.info("ZipCodeList Size " + codes.size());
+		return new StatusCheck(true);
 	}
 	
 	@RequestMapping(path="/role", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void saveRole(@RequestBody RoleDTO roleDTO) {
+	@ResponseBody
+	public StatusCheck saveRole(@RequestBody RoleDTO roleDTO) {
 		Role role = new Role(roleDTO.getName());
-		personService.save(role);
+		return personService.save(role);
 	}
 	
 	@RequestMapping(path="/state", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -13,6 +13,7 @@ import com.automati.dataentity.Person;
 import com.automati.dataentity.Role;
 import com.automati.dataentity.State;
 import com.automati.dataentity.ZipCode;
+import com.automati.dto.StatusCheck;
 import com.automati.repo.PersonRepo;
 import com.automati.repo.RoleRepo;
 import com.automati.repo.StateRepo;
@@ -40,7 +41,11 @@ public class PersonService implements PersonServiceInterface {
 	@Autowired
 	@Qualifier("brcypt")
 	private BCryptPasswordEncoder passwordEncoder;
-
+	
+	@Autowired
+	@Qualifier("status-check")
+	private StatusCheck status;
+	
 	/*
 	 * @Autowired
 	 * 
@@ -94,22 +99,33 @@ public class PersonService implements PersonServiceInterface {
 	}
 
 	@Override
-	public <T> void save(T object) {
+	public <T> StatusCheck  save(T object) {
+		boolean passed = false;
 		if (object instanceof State) {
-
 			stateRepo.save((State) object);
+			passed = true;
 		} else if (object instanceof Role) {
-
 			roleRepo.save((Role) object);
+			passed =true;
 		} else if (object instanceof ZipCode) {
-
 			zipCodeRepo.save((ZipCode) object);
+			passed =true;
 		} else if (object instanceof Person) {
-
 			Person person = (Person) object;
+			if(findPersonByEmail(person.getEmail()) == null) {
 			person.setPassword(passwordEncoder.encode(person.getPassword()));
 			personRepo.save(person);
-
+			passed =true;
+			} else {
+				passed = false;
+			}
+		}
+		if(passed) {
+			status.setPassedTrue();
+			return status;
+		} else {
+			status.setPassedFalse();
+			return status;
 		}
 	}
 
