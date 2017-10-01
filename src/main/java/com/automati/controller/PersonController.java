@@ -26,6 +26,7 @@ import com.automati.dataentity.Role;
 import com.automati.dataentity.State;
 import com.automati.dataentity.ZipCode;
 import com.automati.dto.CreditCardDTO;
+import com.automati.dto.JwtDTO;
 import com.automati.dto.PersonDTO;
 import com.automati.dto.RoleDTO;
 import com.automati.dto.StateDTO;
@@ -48,7 +49,7 @@ public class PersonController {
 	
 	@RequestMapping(path="/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public String login(@RequestBody PersonDTO personDTO) {
+	public JwtDTO login(@RequestBody PersonDTO personDTO) {
 		return personService.getLoginToken(personDTO.getEmail(), personDTO.getPassword());
 	}
 	

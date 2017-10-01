@@ -31,7 +31,6 @@ public class AuthenticationService extends AbstractUserDetailsAuthenticationProv
 		String password = (String) jwtAuthenticationToken.getCredentials();
 		String user = (String) jwtAuthenticationToken.getPrincipal();
 		Collection<? extends GrantedAuthority> authorities = jwtAuthenticationToken.getAuthorities();
-		
 		return new User(user, password, authorities);
 	}
 
