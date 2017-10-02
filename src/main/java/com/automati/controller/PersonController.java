@@ -113,4 +113,11 @@ public class PersonController {
 	public List<State> getAllStates() {
 		return personService.getAllStates();
 	}
+	
+	@RequestMapping(path="/userEmail", method = RequestMethod.GET,  produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Person findByUserbyEmail(@RequestParam("email") String email) {
+		Person person = personService.findPersonByEmail(email);
+		return person;
+	}
 }
