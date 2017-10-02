@@ -13,6 +13,7 @@ import com.automati.dataentity.Person;
 import com.automati.dataentity.Role;
 import com.automati.dataentity.State;
 import com.automati.dataentity.ZipCode;
+import com.automati.dto.JwtDTO;
 import com.automati.dto.StatusCheck;
 import com.automati.repo.PersonRepo;
 import com.automati.repo.RoleRepo;
@@ -63,14 +64,14 @@ public class PersonService implements PersonServiceInterface {
 	}
 
 	@Override
-	public String getLoginToken(String email, String password) {
+	public JwtDTO getLoginToken(String email, String password) {
 		Person person = personRepo.findPersonByEmail(email);
-		String token = "No User Found";
+		String tokenString = "No User Found";
 		if (person != null && passwordEncoder.matches(password, person.getPassword())) {
 			JWTUtils jwtUtils = new JWTUtils();
-			token = jwtUtils.createJWT(person.getId() + "", "Automati Server", 100000, person);
+			tokenString = jwtUtils.createJWT(person.getId() + "", "Automati Server", 18000000, person);
 		}
-		return token;
+		return new JwtDTO(tokenString);
 	}
 
 	@Override

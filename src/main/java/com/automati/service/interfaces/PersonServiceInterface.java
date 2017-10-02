@@ -7,6 +7,7 @@ import com.automati.dataentity.Person;
 import com.automati.dataentity.Role;
 import com.automati.dataentity.State;
 import com.automati.dataentity.ZipCode;
+import com.automati.dto.JwtDTO;
 
 public interface PersonServiceInterface  extends GenericServiceInterface{
 	
@@ -14,7 +15,7 @@ public interface PersonServiceInterface  extends GenericServiceInterface{
 	
 	public Person getPerson(int index);
 
-	public String getLoginToken(String email, String password);
+	public JwtDTO getLoginToken(String email, String password);
 	
 	public List<ZipCode> getStateWithZipCodes(State state);
 	
