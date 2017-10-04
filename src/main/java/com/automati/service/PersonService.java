@@ -2,6 +2,7 @@ package com.automati.service;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,6 +28,8 @@ import javassist.expr.Instanceof;
 @Transactional
 public class PersonService implements PersonServiceInterface {
 
+	private Logger logger = Logger.getLogger(PersonService.class);
+	
 	@Autowired
 	private PersonRepo personRepo;
 
@@ -67,11 +70,14 @@ public class PersonService implements PersonServiceInterface {
 	public JwtDTO getLoginToken(String email, String password) {
 		Person person = personRepo.findPersonByEmail(email);
 		String tokenString = "No User Found";
+		boolean isJWT = false;
 		if (person != null && passwordEncoder.matches(password, person.getPassword())) {
 			JWTUtils jwtUtils = new JWTUtils();
 			tokenString = jwtUtils.createJWT(person.getId() + "", "Automati Server", 18000000, person);
+			isJWT =true;
 		}
-		return new JwtDTO(tokenString);
+		logger.info(" is JWT" + isJWT);
+		return new JwtDTO(tokenString, isJWT);
 	}
 
 	@Override

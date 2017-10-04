@@ -116,4 +116,9 @@ public class CarService implements CarServiceInterface {
 
 	}
 
+	@Override
+	public List<Model> getAllModels() {
+		return modelRepo.findAll();
+	}
+
 }
