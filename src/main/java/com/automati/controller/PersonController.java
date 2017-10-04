@@ -62,6 +62,16 @@ public class PersonController {
 		return personService.save(person);
 	}
 	
+	@RequestMapping(path="/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public void updateUser(@RequestBody PersonDTO personDTO) {
+		State state = personService.findStateByName(personDTO.getState().getName());
+		Role role = personService.findRoleByName(personDTO.getRole().getName());
+		Person person = new Person(personDTO, state, role);
+		personService.update(person);
+	}
+	
+	
 	@RequestMapping(path="/creditCard", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public StatusCheck  saveCreditCards(@RequestBody CreditCardDTO creditCardDTO) {
 		Person person = personService.findPersonByEmail(creditCardDTO.getOwner().getEmail());
