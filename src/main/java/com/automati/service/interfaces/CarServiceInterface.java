@@ -10,5 +10,7 @@ public interface CarServiceInterface extends GenericServiceInterface {
 	
 	public List<Car> getCars(Person person);
 	
+	public List<Model> getAllModels();
+	
 
 }

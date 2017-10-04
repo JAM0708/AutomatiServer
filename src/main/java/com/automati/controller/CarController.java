@@ -28,6 +28,7 @@ import com.automati.dto.FeatureDTO;
 import com.automati.dto.LeaseDTO;
 import com.automati.dto.ModelDTO;
 import com.automati.dto.PersonDTO;
+import com.automati.dto.StatusCheck;
 import com.automati.dto.TransmissionDTO;
 import com.automati.service.interfaces.CarServiceInterface;
 import com.automati.service.interfaces.PersonServiceInterface;
@@ -50,61 +51,66 @@ public class CarController {
 	
 	@RequestMapping(path="/car", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void save(@RequestBody CarDTO carDTO) {
+	public StatusCheck save(@RequestBody CarDTO carDTO) {
 		Car car = new Car(carDTO.getYear(), carDTO.getModel(), carDTO.getColor(), 
 				carDTO.getFeature(), carDTO.getTransmission(), carDTO.getCondition(),
 				carDTO.getEpa(), carDTO.getPrice(), carDTO.getLease(), 
 				carDTO.getReview(), carDTO.getPerson());
-		carService.save(car);
+		return carService.save(car);
 	}
 	
 	@RequestMapping(path="/model", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void saveModel(@RequestBody ModelDTO modelDTO) {
+	public StatusCheck  saveModel(@RequestBody ModelDTO modelDTO) {
 		Model model = new Model(modelDTO.getName());
-		carService.save(model);
+		return carService.save(model);
 	}
 	
 	@RequestMapping(path="/transmission", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void saveTransmission(@RequestBody TransmissionDTO transmissionDTO) {
+	public StatusCheck saveTransmission(@RequestBody TransmissionDTO transmissionDTO) {
 		Transmission transmisson = new Transmission(transmissionDTO.getName());
-		carService.save(transmisson);
+		return carService.save(transmisson);
 	}
 	
 	@RequestMapping(path="/color", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void saveColor(@RequestBody ColorDTO colorDTO) {
+	public StatusCheck saveColor(@RequestBody ColorDTO colorDTO) {
 		Color color = new Color(colorDTO.getName());
-		carService.save(color);
+		return carService.save(color);
 	}
 	
 	@RequestMapping(path="/feature", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void saveFeature(@RequestBody FeatureDTO featureDTO) {
+	public StatusCheck saveFeature(@RequestBody FeatureDTO featureDTO) {
 		Feature feature = new Feature(featureDTO.getName());
-		carService.save(feature);
+		return carService.save(feature);
 	}
 	
 	@RequestMapping(path="/lease", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void saveLease(@RequestBody LeaseDTO leaseDTO) {
+	public StatusCheck saveLease(@RequestBody LeaseDTO leaseDTO) {
 		Lease feature = new Lease(leaseDTO);
-		carService.save(feature);
+		return carService.save(feature);
 	}
 	
 	@RequestMapping(path="/epa", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void saveEPA(@RequestBody EPADTO epaDTO) {
+	public StatusCheck saveEPA(@RequestBody EPADTO epaDTO) {
 		EPA epa = new EPA(epaDTO.getMileage());
-		carService.save(epa);
+		return carService.save(epa);
 	}
 	
 	@RequestMapping(path="/condition", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void saveCondition(@RequestBody ConditionDTO conditionDTO) {
+	public StatusCheck saveCondition(@RequestBody ConditionDTO conditionDTO) {
 		Condition condition = new Condition(conditionDTO);
-		carService.save(condition);
+		return carService.save(condition);
+	}
+	
+	@RequestMapping(path="/models", method= RequestMethod.GET,  produces= MediaType.APPLICATION_JSON_VALUE)
+	public List<Model> getAllModels() {
+		return carService.getAllModels();
 	}
 	
 	
