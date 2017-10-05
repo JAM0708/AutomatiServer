@@ -146,4 +146,9 @@ public class CarService implements CarServiceInterface {
 	public EPA getEPAByMileage(int mileage) {
 		return epaRepo.findEPAByMileage(mileage);
 	}
+
+	@Override
+	public Car getCarById(int id) {
+		return carRepo.findOne(id);
+	}
 }

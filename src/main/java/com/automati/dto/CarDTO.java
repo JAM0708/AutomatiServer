@@ -162,6 +162,22 @@ public class CarDTO implements Serializable {
 		this.person = person;
 	}
 
+	public int getMileage() {
+		return mileage;
+	}
+
+	public void setMileage(int mileage) {
+		this.mileage = mileage;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	
 	
 }

@@ -49,6 +49,12 @@ public class CarController {
 		return carService.getCars(person);
 	}
 	
+	@RequestMapping(path="/car", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Car findCarById(@RequestParam("id") int id) {
+		return carService.getCarById(id);
+	}
+	
 	@RequestMapping(path="/cars/model", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<Car> getListofCarsByModel(@RequestParam("model") String model) {
@@ -63,7 +69,7 @@ public class CarController {
 		Transmission transmission =  carService.getTransmissionByName(carDTO.getTransmission().getName());
 		Condition condition = carService.getConditionByType(carDTO.getCondition().getType());
 		EPA epa = carService.getEPAByMileage(carDTO.getEpa().getMileage());
-		Car car = new Car(carDTO.getYear(), model, color,  transmission, condition, epa, carDTO.getPrice());
+		Car car = new Car(carDTO.getYear(), carDTO.getMileage(), carDTO.getTitle(),  model, color,  transmission, condition, epa, carDTO.getPrice());
 		return carService.save(car); 
 	}
 	

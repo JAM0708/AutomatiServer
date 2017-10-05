@@ -39,11 +39,11 @@ public class Car {
 	@Column(name="car_title")
 	private String title;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne
 	@JoinColumn(name = "model_id")
 	private Model model;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne
 	@JoinColumn(name = "color_id")
 	private Color color;
 	
@@ -69,7 +69,7 @@ public class Car {
 	@JoinColumn(name="lease", nullable= true)
 	private Lease lease;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name="review_id", nullable= true)
 	private List<Review> review = new ArrayList<Review>();
 	
@@ -114,9 +114,11 @@ public class Car {
 
 
 
-	public Car(int year, Model model, Color color, Transmission transmission, Condition condition, EPA epa,
-			double price) {
+	public Car(int year, int mileage, String title, Model model, Color color, Transmission transmission,
+			Condition condition, EPA epa, double price) {
 		this.year = year;
+		this.mileage = mileage;
+		this.title = title;
 		this.model = model;
 		this.color = color;
 		this.transmission = transmission;
@@ -124,6 +126,10 @@ public class Car {
 		this.epa = epa;
 		this.price = price;
 	}
+
+
+
+
 
 
 
