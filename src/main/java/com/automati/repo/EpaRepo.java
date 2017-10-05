@@ -8,4 +8,6 @@ import com.automati.dataentity.EPA;
 @Repository
 public interface EpaRepo extends JpaRepository<EPA, Integer> {
 
+	EPA findEPAByMileage(int mileage);
+
 }

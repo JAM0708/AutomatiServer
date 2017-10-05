@@ -14,24 +14,18 @@ public class ConditionDTO implements Serializable {
 
 	private int id;
 	private String type;
-	private String title;
-	private int mileage;
+	
 
 	public ConditionDTO() {
 	}
+	
+	
 
-	public ConditionDTO(String type, String title, int mileage) {
+	public ConditionDTO(String type) {
 		this.type = type;
-		this.title = title;
-		this.mileage = mileage;
 	}
-
-	public ConditionDTO(int id, String type, String title, int mileage) {
-		this.id = id;
-		this.type = type;
-		this.title = title;
-		this.mileage = mileage;
-	}
+	
+	
 
 	public int getId() {
 		return id;
@@ -49,20 +43,6 @@ public class ConditionDTO implements Serializable {
 		this.type = type;
 	}
 
-	public String getTitle() {
-		return title;
-	}
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public int getMileage() {
-		return mileage;
-	}
-
-	public void setMileage(int mileage) {
-		this.mileage = mileage;
-	}
 
 }

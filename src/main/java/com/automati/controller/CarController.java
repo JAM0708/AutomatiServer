@@ -49,14 +49,22 @@ public class CarController {
 		return carService.getCars(person);
 	}
 	
+	@RequestMapping(path="/cars/model", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Car> getListofCarsByModel(@RequestParam("model") String model) {
+		return carService.getCarsByModel(model);
+	}
+	
 	@RequestMapping(path="/car", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public StatusCheck save(@RequestBody CarDTO carDTO) {
-		Car car = new Car(carDTO.getYear(), carDTO.getModel(), carDTO.getColor(), 
-				carDTO.getFeature(), carDTO.getTransmission(), carDTO.getCondition(),
-				carDTO.getEpa(), carDTO.getPrice(), carDTO.getLease(), 
-				carDTO.getReview(), carDTO.getPerson());
-		return carService.save(car);
+		Model model = carService.getModelByName(carDTO.getModel().getName());
+		Color color = new Color(carDTO.getColor().getId(),  carDTO.getColor().getName());
+		Transmission transmission =  carService.getTransmissionByName(carDTO.getTransmission().getName());
+		Condition condition = carService.getConditionByType(carDTO.getCondition().getType());
+		EPA epa = carService.getEPAByMileage(carDTO.getEpa().getMileage());
+		Car car = new Car(carDTO.getYear(), model, color,  transmission, condition, epa, carDTO.getPrice());
+		return carService.save(car); 
 	}
 	
 	@RequestMapping(path="/model", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -109,6 +117,7 @@ public class CarController {
 	}
 	
 	@RequestMapping(path="/models", method= RequestMethod.GET,  produces= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
 	public List<Model> getAllModels() {
 		return carService.getAllModels();
 	}

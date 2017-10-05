@@ -7,5 +7,6 @@ import com.automati.dataentity.Condition;
 
 @Repository
 public interface ConditionRepo extends JpaRepository<Condition, Integer> {
-
+	
+	Condition findConditionByType(String type);
 }

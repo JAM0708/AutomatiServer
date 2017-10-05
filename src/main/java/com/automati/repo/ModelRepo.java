@@ -8,4 +8,5 @@ import com.automati.dataentity.Model;
 @Repository
 public interface ModelRepo extends JpaRepository<Model, Integer> {
 	
+	Model findModelByName(String name);
 }
