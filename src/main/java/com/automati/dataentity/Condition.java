@@ -22,27 +22,17 @@ public class Condition {
 	
 	@Column(name="condition_type")
 	private String type;
-	
-	@Column(name="condition_title")
-	private String title;
-	
-	@Column(name="condition_mileage")
-	private int mileage;
 
 	public Condition() {
 	}
 	
-	public Condition(int id, String type, String title, int mileage) {
+	public Condition(int id, String type) {
 		this.id = id;
 		this.type = type;
-		this.title = title;
-		this.mileage = mileage;
 	}
 	
 	public Condition(ConditionDTO conditionDTO) {
 		this.type = conditionDTO.getType();
-		this.title = conditionDTO.getTitle();
-		this.mileage = conditionDTO.getMileage();
 	}
 
 	public int getId() {
@@ -59,22 +49,6 @@ public class Condition {
 
 	public void setType(String type) {
 		this.type = type;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public int getMileage() {
-		return mileage;
-	}
-
-	public void setMileage(int mileage) {
-		this.mileage = mileage;
 	}
 	
 	

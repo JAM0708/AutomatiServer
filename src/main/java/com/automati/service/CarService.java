@@ -121,4 +121,34 @@ public class CarService implements CarServiceInterface {
 		return modelRepo.findAll();
 	}
 
+	@Override
+	public List<Car> getCarsByModel(String modelName) {
+		Model model = modelRepo.findModelByName(modelName);
+		return carRepo.findCarByModel(model);
+	}
+	
+	@Override
+	public Model getModelByName(String name) {
+		return modelRepo.findModelByName(name);
+	}
+
+	@Override
+	public Transmission getTransmissionByName(String name) {
+		return transmissionRepo.findTransmissionByName(name);
+	}
+
+	@Override
+	public Condition getConditionByType(String type) {
+		return conditionRepo.findConditionByType(type);
+	}
+
+	@Override
+	public EPA getEPAByMileage(int mileage) {
+		return epaRepo.findEPAByMileage(mileage);
+	}
+
+	@Override
+	public Car getCarById(int id) {
+		return carRepo.findOne(id);
+	}
 }

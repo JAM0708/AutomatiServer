@@ -18,6 +18,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.automati.dto.CarDTO;
+
 @Entity
 @Table(name="car")
 public class Car {
@@ -31,11 +33,17 @@ public class Car {
 	@Column(name="car_year")
 	private int year;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@Column(name="car_mileage")
+	private int mileage;
+	
+	@Column(name="car_title")
+	private String title;
+	
+	@OneToOne
 	@JoinColumn(name = "model_id")
 	private Model model;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne
 	@JoinColumn(name = "color_id")
 	private Color color;
 	
@@ -58,23 +66,21 @@ public class Car {
 	private double price;
 	
 	@OneToOne
-	@JoinColumn(name="lease")
+	@JoinColumn(name="lease", nullable= true)
 	private Lease lease;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name="review_id")
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name="review_id", nullable= true)
 	private List<Review> review = new ArrayList<Review>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="person_id")
+	@JoinColumn(name="person_id" , nullable = true)
 	private Person person;
 
 	public Car() {
 	}
 	
-	public Car(int id) {
-		this.id = id;
-	}
+	
 	
 	public Car(int year, Model model, Color color, List<Feature> feature, Transmission transmission,
 			Condition condition, EPA epa, double price, Lease lease, List<Review> review, Person person) {
@@ -90,6 +96,42 @@ public class Car {
 		this.review = review;
 		this.person = person;
 	}
+	
+
+	public Car(int year, int mileage, String title, Model model, Color color, List<Feature> feature,
+			Transmission transmission, Condition condition, EPA epa, double price) {
+		this.year = year;
+		this.mileage = mileage;
+		this.title = title;
+		this.model = model;
+		this.color = color;
+		this.feature = feature;
+		this.transmission = transmission;
+		this.condition = condition;
+		this.epa = epa;
+		this.price = price;
+	}
+
+
+
+	public Car(int year, int mileage, String title, Model model, Color color, Transmission transmission,
+			Condition condition, EPA epa, double price) {
+		this.year = year;
+		this.mileage = mileage;
+		this.title = title;
+		this.model = model;
+		this.color = color;
+		this.transmission = transmission;
+		this.condition = condition;
+		this.epa = epa;
+		this.price = price;
+	}
+
+
+
+
+
+
 
 	public Car(int id, int year, Model model, Color color, List<Feature> feature, Transmission transmission,
 			Condition condition, EPA epa, double price, Lease lease, List<Review> review, Person person) {
@@ -201,6 +243,30 @@ public class Car {
 
 	public void setPerson(Person person) {
 		this.person = person;
+	}
+
+
+
+	public int getMileage() {
+		return mileage;
+	}
+
+
+
+	public void setMileage(int mileage) {
+		this.mileage = mileage;
+	}
+
+
+
+	public String getTitle() {
+		return title;
+	}
+
+
+
+	public void setTitle(String title) {
+		this.title = title;
 	}	
 	
 	

@@ -12,5 +12,15 @@ public interface CarServiceInterface extends GenericServiceInterface {
 	
 	public List<Model> getAllModels();
 	
+	public List<Car> getCarsByModel(String model);
+	
+	public Model getModelByName(String name);
 
+	public Transmission getTransmissionByName(String name);
+
+	public Condition getConditionByType(String type);
+
+	public EPA getEPAByMileage(int mileage);
+
+	public Car getCarById(int id);
 }

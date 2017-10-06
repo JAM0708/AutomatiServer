@@ -8,4 +8,5 @@ import com.automati.dataentity.Transmission;
 @Repository
 public interface TransmissionRepo extends JpaRepository<Transmission, Integer> {
 
+	Transmission findTransmissionByName(String name);
 }

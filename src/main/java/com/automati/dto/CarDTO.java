@@ -21,19 +21,37 @@ public class CarDTO implements Serializable {
 	private static final long serialVersionUID = -1705468198474980763L;
 	private int id;
 	private int year;
-	private Model model;
-	private Color color;
+	private int mileage;
+	private String title;
+	private ModelDTO model;
+	private ColorDTO color;
 	private List<Feature> feature;
-	private Transmission transmission;
-	private Condition condition;
-	private EPA epa;
+	private TransmissionDTO transmission;
+	private ConditionDTO condition;
+	private EPADTO epa;
 	private double price;
-	private Lease lease;
+	private LeaseDTO lease;
 	private List<Review> review;
-	private Person person;
+	private PersonDTO person;
 	
-	public CarDTO(int id, int year, Model model, Color color, List<Feature> feature, Transmission transmission,
-			Condition condition, EPA epa, double price, Lease lease, List<Review> review, Person person) {
+	
+	
+	public CarDTO() {
+	}
+
+	public CarDTO(int year, ModelDTO model, ColorDTO color, TransmissionDTO transmission, ConditionDTO condition,
+			EPADTO epa, double price) {
+		this.year = year;
+		this.model = model;
+		this.color = color;
+		this.transmission = transmission;
+		this.condition = condition;
+		this.epa = epa;
+		this.price = price;
+	}
+
+	public CarDTO(int id, int year, ModelDTO model, ColorDTO color, List<Feature> feature, TransmissionDTO transmission,
+			ConditionDTO condition, EPADTO epa, double price, LeaseDTO lease, List<Review> review, PersonDTO person) {
 		this.id = id;
 		this.year = year;
 		this.model = model;
@@ -64,19 +82,19 @@ public class CarDTO implements Serializable {
 		this.year = year;
 	}
 
-	public Model getModel() {
+	public ModelDTO getModel() {
 		return model;
 	}
 
-	public void setModel(Model model) {
+	public void setModel(ModelDTO model) {
 		this.model = model;
 	}
 
-	public Color getColor() {
+	public ColorDTO getColor() {
 		return color;
 	}
 
-	public void setColor(Color color) {
+	public void setColor(ColorDTO color) {
 		this.color = color;
 	}
 
@@ -88,27 +106,27 @@ public class CarDTO implements Serializable {
 		this.feature = feature;
 	}
 
-	public Transmission getTransmission() {
+	public TransmissionDTO getTransmission() {
 		return transmission;
 	}
 
-	public void setTransmission(Transmission transmission) {
+	public void setTransmission(TransmissionDTO transmission) {
 		this.transmission = transmission;
 	}
 
-	public Condition getCondition() {
+	public ConditionDTO getCondition() {
 		return condition;
 	}
 
-	public void setCondition(Condition condition) {
+	public void setCondition(ConditionDTO condition) {
 		this.condition = condition;
 	}
 
-	public EPA getEpa() {
+	public EPADTO getEpa() {
 		return epa;
 	}
 
-	public void setEpa(EPA epa) {
+	public void setEpa(EPADTO epa) {
 		this.epa = epa;
 	}
 
@@ -120,11 +138,11 @@ public class CarDTO implements Serializable {
 		this.price = price;
 	}
 
-	public Lease getLease() {
+	public LeaseDTO getLease() {
 		return lease;
 	}
 
-	public void setLease(Lease lease) {
+	public void setLease(LeaseDTO lease) {
 		this.lease = lease;
 	}
 
@@ -136,13 +154,30 @@ public class CarDTO implements Serializable {
 		this.review = review;
 	}
 
-	public Person getPerson() {
+	public PersonDTO getPerson() {
 		return person;
 	}
 
-	public void setPerson(Person person) {
+	public void setPerson(PersonDTO person) {
 		this.person = person;
 	}
+
+	public int getMileage() {
+		return mileage;
+	}
+
+	public void setMileage(int mileage) {
+		this.mileage = mileage;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	
 	
 }

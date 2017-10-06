@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.automati.dataentity.Car;
+import com.automati.dataentity.Model;
 import com.automati.dataentity.Person;
 import com.automati.dataentity.Transmission;
 
@@ -13,5 +14,6 @@ import com.automati.dataentity.Transmission;
 public interface CarRepo extends JpaRepository<Car, Integer> {
 	
 	List<Car> findCarByPerson(Person person);
-
+	
+	List<Car> findCarByModel(Model model);
 }
