@@ -15,8 +15,8 @@ public class CreditCardDTO implements Serializable {
 	private static final long serialVersionUID = 7529509347401132094L;
 	
 	private int id;
-	private int number;
-	private Date expDate;
+	private String number;
+	private String expDate;
 	private int csc;
 	private PersonDTO owner;
 	
@@ -26,7 +26,7 @@ public class CreditCardDTO implements Serializable {
 	
 	
 	
-	public CreditCardDTO(int id, int number, Date expDate, int csc, PersonDTO owner) {
+	public CreditCardDTO(int id, String number, String expDate, int csc, PersonDTO owner) {
 		this.id = id;
 		this.number = number;
 		this.expDate = expDate;
@@ -37,7 +37,7 @@ public class CreditCardDTO implements Serializable {
 	
 
 
-	public CreditCardDTO(int number, Date expDate, int csc, PersonDTO owner) {
+	public CreditCardDTO(String number, String expDate, int csc, PersonDTO owner) {
 		this.number = number;
 		this.expDate = expDate;
 		this.csc = csc;
@@ -56,19 +56,19 @@ public class CreditCardDTO implements Serializable {
 		this.id = id;
 	}
 
-	public int getNumber() {
+	public String getNumber() {
 		return number;
 	}
 
-	public void setNumber(int number) {
+	public void setNumber(String number) {
 		this.number = number;
 	}
 
-	public Date getExpDate() {
+	public String getExpDate() {
 		return expDate;
 	}
 
-	public void setExpDate(Date expDate) {
+	public void setExpDate(String expDate) {
 		this.expDate = expDate;
 	}
 

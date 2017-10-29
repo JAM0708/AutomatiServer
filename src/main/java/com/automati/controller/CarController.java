@@ -128,6 +128,24 @@ public class CarController {
 		return carService.getAllModels();
 	}
 	
+	@RequestMapping(path="/colors", method= RequestMethod.GET,  produces= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Color> getAllColors() {
+		return carService.getAllColors();
+	}
+	
+	@RequestMapping(path="/transmissions", method= RequestMethod.GET,  produces= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Transmission> getAllTransmissions() {
+		return carService.getAllTransmissions();
+	}
+	
+	@RequestMapping(path="/features", method= RequestMethod.GET,  produces= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Feature> getAllFeatures() {
+		return carService.getAllFeatures();
+	}
+	
 	
 
 }

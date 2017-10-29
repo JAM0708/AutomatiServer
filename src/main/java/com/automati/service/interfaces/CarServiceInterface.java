@@ -23,4 +23,10 @@ public interface CarServiceInterface extends GenericServiceInterface {
 	public EPA getEPAByMileage(int mileage);
 
 	public Car getCarById(int id);
+	
+	public List<Color> getAllColors();
+	
+	public List<Transmission> getAllTransmissions();
+	
+	public List<Feature> getAllFeatures();
 }

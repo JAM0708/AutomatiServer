@@ -151,4 +151,19 @@ public class CarService implements CarServiceInterface {
 	public Car getCarById(int id) {
 		return carRepo.findOne(id);
 	}
+
+	@Override
+	public List<Color> getAllColors() {
+		return colorRepo.findAll();
+	}
+
+	@Override
+	public List<Transmission> getAllTransmissions() {
+		return transmissionRepo.findAll();
+	}
+
+	@Override
+	public List<Feature> getAllFeatures() {
+		return featureRepo.findAll();
+	}
 }
