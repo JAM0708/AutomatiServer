@@ -124,7 +124,9 @@ public class CarService implements CarServiceInterface {
 	@Override
 	public List<Car> getCarsByModel(String modelName) {
 		Model model = modelRepo.findModelByName(modelName);
-		return carRepo.findCarByModel(model);
+		List<Car> cars =  carRepo.findCarByModel(model);
+		cars.forEach(car ->  System.out.println(car.getFeature()));
+		return cars;
 	}
 	
 	@Override

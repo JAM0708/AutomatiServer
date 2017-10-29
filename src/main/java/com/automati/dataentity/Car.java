@@ -19,6 +19,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.automati.dto.CarDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="car")
@@ -71,6 +72,7 @@ public class Car {
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name="review_id", nullable= true)
+	@JsonIgnore
 	private List<Review> review = new ArrayList<Review>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
