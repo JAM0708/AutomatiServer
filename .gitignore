@@ -2,3 +2,4 @@ target/**
 /bin/**
 .settings/**
 .classpath
+src/main/resources/app.txt
