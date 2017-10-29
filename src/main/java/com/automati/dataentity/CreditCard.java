@@ -19,6 +19,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="creditcard")
 public class CreditCard {
@@ -41,6 +43,7 @@ public class CreditCard {
 
 	@ManyToOne
 	@JoinColumn(name="person_id")
+	@JsonIgnore
 	private Person person;
 	
 	public CreditCard() {

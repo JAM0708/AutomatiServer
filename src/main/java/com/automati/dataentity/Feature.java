@@ -27,7 +27,7 @@ public class Feature {
 	@Column(name = "feature_description")
 	private String description;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="carId", nullable = true)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Car car;

@@ -79,7 +79,6 @@ public class PersonController {
 		Date date = creditCardService.getDateFromString(creditCardDTO.getExpDate());
 		CreditCard creditCard = new CreditCard(creditCardDTO.getNumber(),  date, creditCardDTO.getCsc(), person);
 		return creditCardService.save(creditCard);
-		
 	}
 	
 	@RequestMapping(path="/creditCard", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

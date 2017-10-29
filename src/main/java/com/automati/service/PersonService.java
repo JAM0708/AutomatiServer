@@ -92,7 +92,9 @@ public class PersonService implements PersonServiceInterface {
 
 	@Override
 	public Person findPersonByEmail(String email) {
-		return personRepo.findPersonByEmail(email);
+		Person person = personRepo.findPersonByEmail(email);
+		System.out.println(person.getCreditCard());
+		return person;
 	}
 
 	@Override

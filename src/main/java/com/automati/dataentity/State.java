@@ -34,7 +34,6 @@ public class State {
 	private String name;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy= "state",  orphanRemoval = true)
-	@Fetch(FetchMode.SUBSELECT)
 	@JsonIgnore
 	private Set<ZipCode> code = new HashSet<ZipCode>();
 
