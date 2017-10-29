@@ -47,7 +47,7 @@ public class Car {
 	@JoinColumn(name = "color_id")
 	private Color color;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy= "car", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy= "car", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Feature> feature;
 	
 	@OneToOne
@@ -69,7 +69,7 @@ public class Car {
 	@JoinColumn(name="lease", nullable= true)
 	private Lease lease;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name="review_id", nullable= true)
 	private List<Review> review = new ArrayList<Review>();
 	

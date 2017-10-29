@@ -54,7 +54,7 @@ public class Person {
 	@JoinColumn(name = "role_id")
 	private Role role;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy= "person", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany( mappedBy= "person", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<CreditCard> creditCard = new ArrayList<CreditCard>();
 
 	public Person() {

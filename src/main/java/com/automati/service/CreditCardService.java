@@ -1,5 +1,8 @@
 package com.automati.service;
 
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +53,19 @@ public class CreditCardService implements CreditCardServiceInterface {
 	public <T> void update(T object) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public Date getDateFromString(String dateString) {
+		Date  date = null;
+		try {
+			date = new SimpleDateFormat("MM-yyyy").parse(dateString);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return  date;
 	}
 
 }

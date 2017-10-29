@@ -1,5 +1,6 @@
 package com.automati.controller;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -65,7 +66,8 @@ public class PersonController {
 	@RequestMapping(path="/creditCard", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public StatusCheck  saveCreditCards(@RequestBody CreditCardDTO creditCardDTO) {
 		Person person = personService.findPersonByEmail(creditCardDTO.getOwner().getEmail());
-		CreditCard creditCard = new CreditCard(creditCardDTO.getNumber(),  creditCardDTO.getExpDate(), creditCardDTO.getCsc(), person);
+		Date date = creditCardService.getDateFromString(creditCardDTO.getExpDate());
+		CreditCard creditCard = new CreditCard(creditCardDTO.getNumber(),  date, creditCardDTO.getCsc(), person);
 		return creditCardService.save(creditCard);
 		
 	}
