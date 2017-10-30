@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.automati.dataentity.Car;
 import com.automati.dataentity.Person;
 import com.automati.dataentity.Review;
 import com.automati.dto.StatusCheck;
+import com.automati.repo.CarRepo;
 import com.automati.repo.ReviewRepo;
 import com.automati.service.interfaces.ReviewServiceInterface;
 
@@ -19,6 +21,9 @@ public class ReviewService implements ReviewServiceInterface {
 
 	@Autowired
 	private ReviewRepo reviewRepo;
+	
+	@Autowired
+	private CarRepo carRepo;
 	
 	@Autowired
 	@Qualifier("status-check")
@@ -33,7 +38,8 @@ public class ReviewService implements ReviewServiceInterface {
 	public <T> StatusCheck save(T object) {
 		boolean passed = false;
 		if (object instanceof Review) {
-			reviewRepo.save((Review) object);
+			Review review = (Review) object;
+			reviewRepo.save(review);
 			status.setPassedTrue();
 			return status;
 		} else {

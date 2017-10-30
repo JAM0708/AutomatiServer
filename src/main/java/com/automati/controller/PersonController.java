@@ -72,22 +72,6 @@ public class PersonController {
 		personService.update(person);
 	}
 	
-	
-	@RequestMapping(path="/creditCard", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public StatusCheck  saveCreditCards(@RequestBody CreditCardDTO creditCardDTO) {
-		Person person = personService.findPersonByEmail(creditCardDTO.getOwner().getEmail());
-		Date date = creditCardService.getDateFromString(creditCardDTO.getExpDate());
-		CreditCard creditCard = new CreditCard(creditCardDTO.getNumber(),  date, creditCardDTO.getCsc(), person);
-		return creditCardService.save(creditCard);
-	}
-	
-	@RequestMapping(path="/creditCard", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public List<CreditCard> findCreditCardsByUser(@RequestParam("email") String userEmail) {
-		Person person = personService.findPersonByEmail(userEmail);
-		return creditCardService.findCreditCardsByUser(person);
-	}
-	
 	@RequestMapping(path="/zipcode", method = RequestMethod.GET,  produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<ZipCode> findZipCodesByState(@RequestParam("state") String stateName) {
@@ -98,18 +82,11 @@ public class PersonController {
 	@RequestMapping(path="/state", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public StatusCheck  saveState(@RequestBody StateDTO stateDTO) {
-		Set<ZipCode> codes = new HashSet<>();
-		logger.info(stateDTO.toString());
-		State state = new State(stateDTO.getName(), codes);
-		personService.save(state);
-		Iterator<ZipCodeDTO> itr = stateDTO.getCodes().iterator();
-		while(itr.hasNext()) {
-			ZipCode zipcode = new ZipCode(itr.next().getCode());
-			zipcode.setState(state);
-			state.getCode().add(zipcode);
-			personService.save(zipcode);
+		State state = new State(stateDTO.getName());
+		Iterator<ZipCodeDTO> codes =  stateDTO.getCodes().iterator();
+		for(ZipCodeDTO code: stateDTO.getCodes()) {
+			state.addZipCode(code.getCode());
 		}
-		logger.info("ZipCodeList Size " + codes.size());
 		return new StatusCheck(true);
 	}
 	

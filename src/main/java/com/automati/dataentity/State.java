@@ -33,7 +33,7 @@ public class State {
 	@Column(name = "name", nullable = false, unique = true)
 	private String name;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy= "state",  orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy= "state",  orphanRemoval = true, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<ZipCode> code = new HashSet<ZipCode>();
 
@@ -47,6 +47,10 @@ public class State {
 	}
 	
 	
+
+	public State(String name) {
+		this.name = name;
+	}
 
 	public State(String name, Set<ZipCode> code) {
 		this.name = name;
@@ -75,6 +79,16 @@ public class State {
 
 	public void setCode(Set<ZipCode> code) {
 		this.code = code;
+	}
+	
+	public void addZipCode(String  zipcode) {
+		if(this.code == null) {
+			this.code = new HashSet<>();
+		}
+		ZipCode newZipCode = new ZipCode(zipcode);
+		this.code.add(newZipCode);
+		newZipCode.setState(this);
+		
 	}
 	
 	

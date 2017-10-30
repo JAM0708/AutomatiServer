@@ -101,13 +101,6 @@ public class CarController {
 		return carService.save(feature);
 	}
 	
-	@RequestMapping(path="/lease", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public StatusCheck saveLease(@RequestBody LeaseDTO leaseDTO) {
-		Lease feature = new Lease(leaseDTO);
-		return carService.save(feature);
-	}
-	
 	@RequestMapping(path="/epa", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public StatusCheck saveEPA(@RequestBody EPADTO epaDTO) {
