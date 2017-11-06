@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.automati.config.security.JWTUtils;
+import com.automati.dataentity.Car;
 import com.automati.dataentity.Person;
 import com.automati.dataentity.Role;
 import com.automati.dataentity.State;
@@ -121,7 +122,7 @@ public class PersonService implements PersonServiceInterface {
 			passed =true;
 		} else if (object instanceof Person) {
 			Person person = (Person) object;
-			if(findPersonByEmail(person.getEmail()) == null) {
+			if(person.getEmail() != null) {
 			person.setPassword(passwordEncoder.encode(person.getPassword()));
 			personRepo.save(person);
 			passed =true;

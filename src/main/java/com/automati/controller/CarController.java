@@ -19,6 +19,8 @@ import com.automati.dataentity.Feature;
 import com.automati.dataentity.Lease;
 import com.automati.dataentity.Model;
 import com.automati.dataentity.Person;
+import com.automati.dataentity.Role;
+import com.automati.dataentity.State;
 import com.automati.dataentity.Transmission;
 import com.automati.dto.CarDTO;
 import com.automati.dto.ColorDTO;
@@ -71,6 +73,20 @@ public class CarController {
 		EPA epa = carService.getEPAByMileage(carDTO.getEpa().getMileage());
 		Car car = new Car(carDTO.getYear(), carDTO.getMileage(), carDTO.getTitle(),  model, color,  transmission, condition, epa, carDTO.getPrice());
 		return carService.save(car); 
+	}
+	
+	@RequestMapping(path="/car/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public void updateCar(@RequestBody CarDTO carDTO) {
+		Model model = carService.getModelByName(carDTO.getModel().getName());
+		Color color = carService.getColorByName(carDTO.getColor().getName());
+		Transmission transmission =  carService.getTransmissionByName(carDTO.getTransmission().getName());
+		Condition condition = carService.getConditionByType(carDTO.getCondition().getType());
+		//EPA epa = carService.getEPAByMileage(carDTO.getEpa().getMileage());
+		Person person = personService.findPersonByEmail(carDTO.getPerson().getEmail());
+		Car car = new Car(carDTO.getId(), carDTO.getYear(), carDTO.getMileage(), carDTO.getTitle(),  model, color,  transmission, condition, carDTO.getPrice(), person);
+		System.out.println(car.toString());
+		carService.update(car);
 	}
 	
 	@RequestMapping(path="/model", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -146,6 +162,4 @@ public class CarController {
 		return carService.getAllFeatures();
 	}
 	
-	
-
 }

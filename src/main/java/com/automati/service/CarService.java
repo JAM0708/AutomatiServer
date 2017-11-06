@@ -1,6 +1,7 @@
 package com.automati.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -124,7 +125,14 @@ public class CarService implements CarServiceInterface {
 	@Override
 	public List<Car> getCarsByModel(String modelName) {
 		Model model = modelRepo.findModelByName(modelName);
-		return carRepo.findCarByModel(model);
+		List<Car> carsByModel = carRepo.findCarByModel(model);
+		
+		// lambda
+		//carsByModel.forEach(car->System.out.println(car.getFeature()));
+		carsByModel.forEach(car->System.out.println(car.toString()));
+		List<Car> results = carsByModel.stream().filter(car -> car.getPerson() == null).collect(Collectors.toList()); 
+		results.forEach(car -> System.out.println(car.toString()));
+		return results;
 	}
 	
 	@Override
@@ -149,7 +157,9 @@ public class CarService implements CarServiceInterface {
 
 	@Override
 	public Car getCarById(int id) {
-		return carRepo.findOne(id);
+		Car car = carRepo.findOne(id);
+		System.out.println(car.getFeature());
+		return car;
 	}
 
 	@Override
@@ -165,5 +175,11 @@ public class CarService implements CarServiceInterface {
 	@Override
 	public List<Feature> getAllFeatures() {
 		return featureRepo.findAll();
+	}
+
+	@Override
+	public Color getColorByName(String name) {
+		// TODO Auto-generated method stub
+		return colorRepo.findColorByName(name);
 	}
 }
