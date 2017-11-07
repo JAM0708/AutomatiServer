@@ -94,7 +94,9 @@ public class PersonService implements PersonServiceInterface {
 	@Override
 	public Person findPersonByEmail(String email) {
 		Person person = personRepo.findPersonByEmail(email);
+		if(person !== null) {
 		System.out.println(person.getCreditCard());
+		}
 		return person;
 	}
 
@@ -122,7 +124,7 @@ public class PersonService implements PersonServiceInterface {
 			passed =true;
 		} else if (object instanceof Person) {
 			Person person = (Person) object;
-			if(person.getEmail() != null) {
+			if(findPersonByEmail(person.getEmail()) != null) {
 			person.setPassword(passwordEncoder.encode(person.getPassword()));
 			personRepo.save(person);
 			passed =true;
