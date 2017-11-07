@@ -151,7 +151,9 @@ public class CarService implements CarServiceInterface {
 
 	@Override
 	public Car getCarById(int id) {
-		return carRepo.findOne(id);
+		Car car = carRepo.findOne(id);
+		System.out.println(car.getReview());
+		return car;
 	}
 
 	@Override

@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Null;
 
 import com.automati.dto.CarDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -70,12 +71,11 @@ public class Car {
 	@JoinColumn(name="lease", nullable= true)
 	private Lease lease;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name="review_id", nullable= true)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy= "car", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
 	private List<Review> review = new ArrayList<Review>();
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne
 	@JoinColumn(name="person_id" , nullable = true)
 	private Person person;
 
@@ -271,8 +271,14 @@ public class Car {
 		this.title = title;
 	}	
 	
-	
-
+	public void addReview(Review oneReview) {
+		if(this.review == null) {
+			this.review = new ArrayList<>();
+		}
+		this.review.add(oneReview);
+		
+		oneReview.setCar(this);
+	}
 	
 	 
 }
