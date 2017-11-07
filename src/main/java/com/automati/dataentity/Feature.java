@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "feature")
 public class Feature {
@@ -30,6 +32,7 @@ public class Feature {
 	@ManyToOne
 	@JoinColumn(name="carId", nullable = true)
 	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
 	private Car car;
 	
 	public Feature() {

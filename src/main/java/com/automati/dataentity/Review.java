@@ -1,6 +1,6 @@
 package com.automati.dataentity;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,9 +8,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="review")
@@ -26,6 +35,7 @@ public class Review {
 	private int rating;
 	
 	@Column(name="review_time")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date time;
 	
 	@Column(name="description")
@@ -34,6 +44,12 @@ public class Review {
 	@OneToOne
 	@JoinColumn(name="person_id")
 	private Person person;
+	
+	@ManyToOne
+	@JoinColumn(name="carId", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	private Car car;
 
 	public Review(int id, int rating, Date time, String description, Person person) {
 		this.id = id;
@@ -42,6 +58,38 @@ public class Review {
 		this.description = description;
 		this.person = person;
 	}
+	
+	
+
+	public Review(int rating, Date time, String description, Person person, Car car) {
+		this.rating = rating;
+		this.time = time;
+		this.description = description;
+		this.person = person;
+		this.car = car;
+	}
+
+
+
+	public Review(int id, int rating, Date time, String description, Person person, Car car) {
+		this.id = id;
+		this.rating = rating;
+		this.time = time;
+		this.description = description;
+		this.person = person;
+		this.car = car;
+	}
+	
+	
+
+	public Review(int rating, Date time, String description, Person person) {
+		this.rating = rating;
+		this.time = time;
+		this.description = description;
+		this.person = person;
+	}
+
+
 
 	public Review() {
 	}
@@ -84,6 +132,14 @@ public class Review {
 
 	public void setPerson(Person person) {
 		this.person = person;
+	}
+
+	public Car getCar() {
+		return car;
+	}
+
+	public void setCar(Car car) {
+		this.car = car;
 	}
 	
 	

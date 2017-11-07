@@ -135,6 +135,7 @@ public class CarService implements CarServiceInterface {
 		List<Car> results = carsByModel.stream().filter(car -> car.getPerson() == null).collect(Collectors.toList()); 
 		results.forEach(car -> System.out.println(car.toString()));
 		return results;
+
 	}
 	
 	@Override
@@ -161,6 +162,7 @@ public class CarService implements CarServiceInterface {
 	public Car getCarById(int id) {
 		Car car = carRepo.findOne(id);
 		System.out.println(car.getFeature());
+		System.out.println(car.getReview());
 		return car;
 	}
 
