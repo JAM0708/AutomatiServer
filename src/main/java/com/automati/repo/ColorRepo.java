@@ -7,5 +7,5 @@ import com.automati.dataentity.Color;
 
 @Repository
 public interface ColorRepo extends JpaRepository<Color, Integer> {
-
+	Color findColorByName(String name);
 }

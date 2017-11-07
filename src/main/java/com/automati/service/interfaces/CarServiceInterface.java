@@ -29,4 +29,6 @@ public interface CarServiceInterface extends GenericServiceInterface {
 	public List<Transmission> getAllTransmissions();
 	
 	public List<Feature> getAllFeatures();
+	
+	public Color getColorByName(String name);
 }

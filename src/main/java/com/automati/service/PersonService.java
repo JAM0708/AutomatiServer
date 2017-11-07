@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.automati.config.security.JWTUtils;
+import com.automati.dataentity.Car;
 import com.automati.dataentity.Person;
 import com.automati.dataentity.Role;
 import com.automati.dataentity.State;
@@ -93,7 +94,9 @@ public class PersonService implements PersonServiceInterface {
 	@Override
 	public Person findPersonByEmail(String email) {
 		Person person = personRepo.findPersonByEmail(email);
+		if(person !== null) {
 		System.out.println(person.getCreditCard());
+		}
 		return person;
 	}
 

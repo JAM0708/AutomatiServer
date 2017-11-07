@@ -21,6 +21,8 @@ import javax.validation.constraints.Null;
 
 import com.automati.dto.CarDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 @Entity
 @Table(name="car")
@@ -50,6 +52,7 @@ public class Car {
 	private Color color;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy= "car", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore
 	private List<Feature> feature;
 	
 	@OneToOne
@@ -72,11 +75,13 @@ public class Car {
 	private Lease lease;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy= "car", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name="review_id", nullable= true)
 	@JsonIgnore
 	private List<Review> review = new ArrayList<Review>();
 	
 	@OneToOne
 	@JoinColumn(name="person_id" , nullable = true)
+	@JsonIgnore
 	private Person person;
 
 	public Car() {
@@ -129,7 +134,19 @@ public class Car {
 		this.price = price;
 	}
 
-
+	public Car(int id, int year, int mileage, String title, Model model, Color color, Transmission transmission,
+			Condition condition, double price, Person person) {
+		this.id = id;
+		this.year = year;
+		this.mileage = mileage;
+		this.title = title;
+		this.model = model;
+		this.color = color;
+		this.transmission = transmission;
+		this.condition = condition;
+		this.price = price;
+		this.person = person;
+	}
 
 
 
@@ -269,6 +286,16 @@ public class Car {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Car [id=" + id + ", year=" + year + ", mileage=" + mileage + ", title=" + title + ", model=" + model
+				+ ", color=" + color + ", feature=" + feature + ", transmission=" + transmission + ", condition="
+				+ condition + ", epa=" + epa + ", price=" + price + ", lease=" + lease + ", review=" + review
+				+ ", person=" + person + "]";
 	}	
 	
 	public void addReview(Review oneReview) {
