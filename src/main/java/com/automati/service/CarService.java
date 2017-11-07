@@ -61,7 +61,9 @@ public class CarService implements CarServiceInterface {
 	@Override
 	public List<Car> getCars(Person person) {
 		// TODO get logger for class
-		return carRepo.findCarByPerson(person);
+		List<Car> results = carRepo.findCarByPerson(person);
+		results.forEach(line->System.out.println(line.getFeature()));
+		return results;
 
 	}
 
