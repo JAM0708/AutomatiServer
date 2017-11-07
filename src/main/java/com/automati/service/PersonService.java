@@ -124,7 +124,7 @@ public class PersonService implements PersonServiceInterface {
 			passed =true;
 		} else if (object instanceof Person) {
 			Person person = (Person) object;
-			if(findPersonByEmail(person.getEmail()) != null) {
+			if(findPersonByEmail(person.getEmail()) == null) {
 			person.setPassword(passwordEncoder.encode(person.getPassword()));
 			personRepo.save(person);
 			passed =true;
