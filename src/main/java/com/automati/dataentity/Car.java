@@ -75,7 +75,6 @@ public class Car {
 	private Lease lease;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy= "car", cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name="review_id", nullable= true)
 	@JsonIgnore
 	private List<Review> review = new ArrayList<Review>();
 	
