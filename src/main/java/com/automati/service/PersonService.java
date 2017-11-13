@@ -13,12 +13,14 @@ import com.automati.config.security.JWTUtils;
 import com.automati.dataentity.Car;
 import com.automati.dataentity.Person;
 import com.automati.dataentity.Role;
+import com.automati.dataentity.Shipping;
 import com.automati.dataentity.State;
 import com.automati.dataentity.ZipCode;
 import com.automati.dto.JwtDTO;
 import com.automati.dto.StatusCheck;
 import com.automati.repo.PersonRepo;
 import com.automati.repo.RoleRepo;
+import com.automati.repo.ShippingRepo;
 import com.automati.repo.StateRepo;
 import com.automati.repo.ZipCodeRepo;
 import com.automati.service.interfaces.PersonServiceInterface;
@@ -42,6 +44,9 @@ public class PersonService implements PersonServiceInterface {
 
 	@Autowired
 	private RoleRepo roleRepo;
+	
+	@Autowired
+	private ShippingRepo shippingRepo;
 
 	@Autowired
 	@Qualifier("brcypt")
@@ -94,7 +99,7 @@ public class PersonService implements PersonServiceInterface {
 	@Override
 	public Person findPersonByEmail(String email) {
 		Person person = personRepo.findPersonByEmail(email);
-		if(person !== null) {
+		if(person != null) {
 		System.out.println(person.getCreditCard());
 		}
 		return person;
@@ -156,6 +161,9 @@ public class PersonService implements PersonServiceInterface {
 			person.setPassword(passwordEncoder.encode(person.getPassword()));
 			personRepo.save((Person) object);
 			
+		}
+		else if(object instanceof Shipping) {
+			shippingRepo.save((Shipping) object);
 		}
 	}
 

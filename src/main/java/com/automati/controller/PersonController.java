@@ -24,12 +24,14 @@ import com.automati.dataentity.Car;
 import com.automati.dataentity.CreditCard;
 import com.automati.dataentity.Person;
 import com.automati.dataentity.Role;
+import com.automati.dataentity.Shipping;
 import com.automati.dataentity.State;
 import com.automati.dataentity.ZipCode;
 import com.automati.dto.CreditCardDTO;
 import com.automati.dto.JwtDTO;
 import com.automati.dto.PersonDTO;
 import com.automati.dto.RoleDTO;
+import com.automati.dto.ShippingDTO;
 import com.automati.dto.StateDTO;
 import com.automati.dto.StatusCheck;
 import com.automati.dto.ZipCodeDTO;
@@ -110,5 +112,16 @@ public class PersonController {
 		Person person = personService.findPersonByEmail(email);
 		return person;
 	}
+	
+
+	@RequestMapping(path="/updateShipping", method = RequestMethod.POST,  produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public void updateShipping(@RequestBody ShippingDTO shippingDTO) {
+		Person person = personService.findPersonByEmail(shippingDTO.getPerson().getEmail());
+		State state = personService.findStateByName(shippingDTO.getState().getName());
+		Shipping shipping = new Shipping(shippingDTO, person, state);
+		personService.update(shipping);
+	}
+	
 	
 }
