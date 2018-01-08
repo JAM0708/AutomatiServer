@@ -54,8 +54,11 @@ public class Person {
 	@JoinColumn(name = "role_id")
 	private Role role;
 
-	@OneToMany( mappedBy= "person", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<CreditCard> creditCard = new ArrayList<CreditCard>();
+	//@OneToMany( mappedBy= "person", cascade = CascadeType.ALL, orphanRemoval = true)
+	//private List<CreditCard> creditCard = new ArrayList<CreditCard>();
+	
+	@Column()
+	private float balance;
 
 	public Person() {
 	}
@@ -69,7 +72,7 @@ public class Person {
 	}
 
 	public Person(int id, String email, String firstName, String lastName, String street, String city, String password,
-			State state, Role role, List<CreditCard> creditCard) {
+			State state, Role role) {
 		this.id = id;
 		this.email = email;
 		this.firstName = firstName;
@@ -79,7 +82,7 @@ public class Person {
 		this.password = password;
 		this.state = state;
 		this.role = role;
-		this.creditCard = creditCard;
+		//this.creditCard = creditCard;
 	}
 	
 	public Person(PersonDTO personDTO, State state, Role role) {
@@ -154,6 +157,7 @@ public class Person {
 		this.role = role;
 	}
 
+	/*
 	public List<CreditCard> getCreditCard() {
 		return creditCard;
 	}
@@ -161,20 +165,38 @@ public class Person {
 	public void setCreditCard(List<CreditCard> creditCard) {
 		this.creditCard = creditCard;
 	}
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", street=" + street + ", city=" + city + ", password=" + password + ", state=" + state + ", role="
+				+ role + ", creditCard=" + creditCard + ", balance=" + balance + "]";
+	}
 
+	*/
+
+	
 	public String getEmail() {
 		return email;
+	}
+
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", street=" + street + ", city=" + city + ", password=" + password + ", state=" + state + ", role="
+				+ role + ", balance=" + balance + "]";
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	@Override
-	public String toString() {
-		return "Person [email=" + email + ", firstName=" + firstName + ", lastName=" + lastName + ", street=" + street
-				+ ", city=" + city + ", password=" + password + ", state=" + state + ", role=" + role + ", creditCard="
-				+ creditCard + "]";
+	
+	public float getBalance() {
+		return balance;
+	}
+
+	public void setBalance(float balance) {
+		this.balance = balance;
 	}
 	
 	

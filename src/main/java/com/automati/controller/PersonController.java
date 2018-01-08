@@ -123,5 +123,18 @@ public class PersonController {
 		personService.update(shipping);
 	}
 	
+	@RequestMapping(path = "/shipsAddress", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Shipping> findShippingAddressesByUser(@RequestParam("email") String userEmail) {
+		Person person = personService.findPersonByEmail(userEmail);
+		return personService.findShippingsByPerson(person);
+	}
+	
+	@RequestMapping(path = "/shipAddr", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Shipping findShippingAddressById(@RequestParam("id") int id) {
+		return personService.findShippingAddressById(id);
+	}
+	
 	
 }

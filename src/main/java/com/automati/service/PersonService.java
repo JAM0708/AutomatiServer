@@ -99,9 +99,9 @@ public class PersonService implements PersonServiceInterface {
 	@Override
 	public Person findPersonByEmail(String email) {
 		Person person = personRepo.findPersonByEmail(email);
-		if(person != null) {
-		System.out.println(person.getCreditCard());
-		}
+		//if(person != null) {
+		//System.out.println(person.getCreditCard());
+		//}
 		return person;
 	}
 
@@ -165,6 +165,22 @@ public class PersonService implements PersonServiceInterface {
 		else if(object instanceof Shipping) {
 			shippingRepo.save((Shipping) object);
 		}
+	}
+
+	@Override
+	public List<Shipping> findShippingsByPerson(Person person) {
+		// TODO Auto-generated method stub
+		return shippingRepo.findShippingsByPerson(person);
+	}
+
+	@Override
+	public Shipping findShippingAddressById(int id) {
+	
+		Shipping shipping = shippingRepo.findOne(id);
+		if(shipping != null) {
+			System.out.println(shipping.getPerson().toString());
+		}
+		return shipping;
 	}
 
 }

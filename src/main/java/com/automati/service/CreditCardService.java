@@ -68,4 +68,14 @@ public class CreditCardService implements CreditCardServiceInterface {
 		return  date;
 	}
 
+	@Override
+	public CreditCard findCreditCardById(int id) {
+		CreditCard card = cardRepo.findOne(id);
+		
+		if(card != null) {
+			System.out.println(card.getPerson().toString());
+		}
+		return card;
+	}
+
 }

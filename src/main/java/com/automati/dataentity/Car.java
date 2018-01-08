@@ -53,7 +53,7 @@ public class Car {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy= "car", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
-	private List<Feature> feature;
+	private List<Feature> feature = new ArrayList<Feature>();
 	
 	@OneToOne
 	@JoinColumn(name="transmission_id")
@@ -80,7 +80,6 @@ public class Car {
 	
 	@OneToOne
 	@JoinColumn(name="person_id" , nullable = true)
-	@JsonIgnore
 	private Person person;
 
 	public Car() {

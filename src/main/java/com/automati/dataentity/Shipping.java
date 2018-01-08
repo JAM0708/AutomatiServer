@@ -43,7 +43,7 @@ public class Shipping {
 	@JoinColumn(name = "state_id", nullable= true)
 	private State state;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne()
 	@JoinColumn(name="person_id" , nullable = true)
 	private Person person;
 	

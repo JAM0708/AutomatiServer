@@ -41,9 +41,8 @@ public class CreditCard {
 	@Column(name="csc", nullable= false)
 	private int csc;
 
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name="person_id")
-	@JsonIgnore
 	private Person person;
 	
 	public CreditCard() {
