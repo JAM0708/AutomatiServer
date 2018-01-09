@@ -49,6 +49,13 @@ public class PurchaseController {
 		return creditCardService.findCreditCardsByUser(person);
 	}
 	
+	
+	@RequestMapping(path="/card", method = RequestMethod.GET,  produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public CreditCard findCreditCardByID(@RequestParam("id") int id) {
+		CreditCard card = creditCardService.findCreditCardById(id);
+		return card;
+	}
 
 	@RequestMapping(path="/lease", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody

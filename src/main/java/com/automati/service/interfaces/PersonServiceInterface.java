@@ -5,6 +5,7 @@ import java.util.List;
 import com.automati.dataentity.Car;
 import com.automati.dataentity.Person;
 import com.automati.dataentity.Role;
+import com.automati.dataentity.Shipping;
 import com.automati.dataentity.State;
 import com.automati.dataentity.ZipCode;
 import com.automati.dto.JwtDTO;
@@ -26,4 +27,8 @@ public interface PersonServiceInterface  extends GenericServiceInterface{
 	public State findStateByName(String name);
 	
 	public Role findRoleByName(String name);
+	
+	public List<Shipping> findShippingsByPerson(Person person);
+	
+	public Shipping findShippingAddressById(int id);
 }
