@@ -74,6 +74,9 @@ public class Car {
 	@JoinColumn(name="lease", nullable= true)
 	private Lease lease;
 	
+	@Column()
+	private String vin;
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy= "car", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
 	private List<Review> review = new ArrayList<Review>();
@@ -284,6 +287,18 @@ public class Car {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+
+
+	public String getVin() {
+		return vin;
+	}
+
+
+
+	public void setVin(String vin) {
+		this.vin = vin;
 	}
 
 
