@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.automati.repo.CarRepo;
 import com.automati.repo.ColorRepo;
 import com.automati.repo.ConditionRepo;
+import com.automati.repo.EngineRepo;
 import com.automati.repo.EpaRepo;
 import com.automati.repo.FeatureRepo;
 import com.automati.repo.LeaseRepo;
@@ -47,6 +48,9 @@ public class CarService implements CarServiceInterface {
 
 	@Autowired
 	private ConditionRepo conditionRepo;
+	
+	@Autowired
+	private EngineRepo engineRepo;
 	
 	@Autowired
 	@Qualifier("status-check")
@@ -185,5 +189,23 @@ public class CarService implements CarServiceInterface {
 	public Color getColorByName(String name) {
 		// TODO Auto-generated method stub
 		return colorRepo.findColorByName(name);
+	}
+
+	@Override
+	public Transmission getTransmission(int id) {
+		// TODO Auto-generated method stub
+		return transmissionRepo.findOne(id);
+	}
+
+	@Override
+	public Engine getEngine(int id) {
+		// TODO Auto-generated method stub
+		return engineRepo.findOne(id);
+	}
+
+	@Override
+	public List<Engine> getAllEngines() {
+		// TODO Auto-generated method stub
+		return engineRepo.findAll();
 	}
 }

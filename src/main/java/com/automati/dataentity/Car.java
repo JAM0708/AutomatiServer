@@ -60,6 +60,10 @@ public class Car {
 	private Transmission transmission;
 	
 	@OneToOne
+	@JoinColumn(name = "engine_id")
+	private Engine engine;
+	
+	@OneToOne
 	@JoinColumn(name="condition_id")
 	private Condition condition;
 	
@@ -149,10 +153,6 @@ public class Car {
 		this.person = person;
 	}
 
-
-
-
-
 	public Car(int id, int year, Model model, Color color, List<Feature> feature, Transmission transmission,
 			Condition condition, EPA epa, double price, Lease lease, List<Review> review, Person person) {
 		this.id = id;
@@ -168,6 +168,23 @@ public class Car {
 		this.review = review;
 		this.person = person;
 	}
+
+	public Car(int year, int mileage, String title, Model model, Color color, Transmission transmission,
+			Condition condition, double price, String vin, Person person, Engine engine) {
+		this.year = year;
+		this.mileage = mileage;
+		this.title = title;
+		this.model = model;
+		this.color = color;
+		this.transmission = transmission;
+		this.condition = condition;
+		this.price = price;
+		this.vin = vin;
+		this.person = person;
+		this.engine = engine;
+	}
+
+
 
 	public int getId() {
 		return id;
@@ -299,6 +316,18 @@ public class Car {
 
 	public void setVin(String vin) {
 		this.vin = vin;
+	}
+
+	
+
+	public Engine getEngine() {
+		return engine;
+	}
+
+
+
+	public void setEngine(Engine engine) {
+		this.engine = engine;
 	}
 
 

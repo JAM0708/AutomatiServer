@@ -15,6 +15,7 @@ import com.automati.dataentity.Car;
 import com.automati.dataentity.Color;
 import com.automati.dataentity.Condition;
 import com.automati.dataentity.EPA;
+import com.automati.dataentity.Engine;
 import com.automati.dataentity.Feature;
 import com.automati.dataentity.Lease;
 import com.automati.dataentity.Model;
@@ -63,15 +64,17 @@ public class CarController {
 		return carService.getCarsByModel(model);
 	}
 	
-	@RequestMapping(path="/car", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path="/car/save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public StatusCheck save(@RequestBody CarDTO carDTO) {
 		Model model = carService.getModelByName(carDTO.getModel().getName());
-		Color color = new Color(carDTO.getColor().getId(),  carDTO.getColor().getName());
+		Color color = carService.getColorByName(carDTO.getColor().getName());
 		Transmission transmission =  carService.getTransmissionByName(carDTO.getTransmission().getName());
 		Condition condition = carService.getConditionByType(carDTO.getCondition().getType());
-		EPA epa = carService.getEPAByMileage(carDTO.getEpa().getMileage());
-		Car car = new Car(carDTO.getYear(), carDTO.getMileage(), carDTO.getTitle(),  model, color,  transmission, condition, epa, carDTO.getPrice());
+		Person person = personService.findPersonByEmail(carDTO.getPerson().getEmail());
+		Engine engine = carService.getEngine(carDTO.getEngine().getId());
+		//EPA epa = carService.getEPAByMileage(carDTO.getEpa().getMileage());
+		Car car = new Car(carDTO.getYear(), carDTO.getMileage(), carDTO.getTitle(),  model, color,  transmission, condition, carDTO.getPrice(), carDTO.getVin(), person, engine);
 		return carService.save(car); 
 	}
 	
@@ -143,11 +146,43 @@ public class CarController {
 		return carService.getAllColors();
 	}
 	
+	@RequestMapping(path = "/color", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Color getColor(@RequestParam("name") String name) {
+		return carService.getColorByName(name);
+	}
+	
+	@RequestMapping(path = "/car/model", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Model getModel(@RequestParam("name") String name) {
+		return carService.getModelByName(name);
+	}
+	
 	@RequestMapping(path="/transmissions", method= RequestMethod.GET,  produces= MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<Transmission> getAllTransmissions() {
 		return carService.getAllTransmissions();
 	}
+	
+	@RequestMapping(path = "/transmission", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Transmission getTransmission(@RequestParam("id") int id) {
+		return carService.getTransmission(id);
+	}
+	
+	@RequestMapping(path = "/engine", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Engine getEngineById(@RequestParam("id") int id) {
+		return carService.getEngine(id);
+	}
+	
+	@RequestMapping(path = "/engines", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Engine> getEngines() {
+		return carService.getAllEngines();
+	}
+	
+	
 	
 	@RequestMapping(path="/features", method= RequestMethod.GET,  produces= MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody

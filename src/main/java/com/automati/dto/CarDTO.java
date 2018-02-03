@@ -32,8 +32,9 @@ public class CarDTO implements Serializable {
 	private double price;
 	private LeaseDTO lease;
 	private List<Review> review;
+	private String vin;
 	private PersonDTO person;
-	
+	private EngineDTO engine;
 	
 	
 	public CarDTO() {
@@ -64,6 +65,22 @@ public class CarDTO implements Serializable {
 		this.lease = lease;
 		this.review = review;
 		this.person = person;
+	}
+	
+	// update soon
+	public CarDTO(int year, int mileage, String title, ModelDTO model, ColorDTO color, TransmissionDTO transmission, ConditionDTO condition,
+		 double price, String vin, PersonDTO person, EngineDTO engine) {
+		this.year = year;
+		this.mileage = mileage;
+		this.title = title;
+		this.model = model;
+		this.color = color;
+		this.transmission = transmission;
+		this.condition = condition;
+		this.price = price;
+		this.vin = vin;
+		this.person = person;
+		this.engine = engine;
 	}
 
 	public int getId() {
@@ -178,6 +195,23 @@ public class CarDTO implements Serializable {
 		this.title = title;
 	}
 
+	public String getVin() {
+		return vin;
+	}
+
+	public void setVin(String vin) {
+		this.vin = vin;
+	}
+
+	public EngineDTO getEngine() {
+		return engine;
+	}
+
+	public void setEngine(EngineDTO engine) {
+		this.engine = engine;
+	}
+
+	
 	
 	
 }
