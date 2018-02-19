@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.automati.dataentity.Car;
+import com.automati.dataentity.Model;
 import com.automati.dataentity.Person;
 import com.automati.dataentity.Review;
 import com.automati.dto.StatusCheck;
@@ -29,10 +30,6 @@ public class ReviewService implements ReviewServiceInterface {
 	@Qualifier("status-check")
 	private StatusCheck status;
 
-	@Override
-	public List<Review> getReviews(Person person) {
-		return reviewRepo.findReviewsByPerson(person);
-	}
 
 	@Override
 	public <T> StatusCheck save(T object) {
@@ -60,6 +57,24 @@ public class ReviewService implements ReviewServiceInterface {
 		if (object instanceof Review) {
 			reviewRepo.save((Review) object);
 		}
+	}
+
+	@Override
+	public List<Review> getReviewsByModel(Model model) {
+		// TODO Auto-generated method stub
+		return reviewRepo.findReviewsByModel(model);
+	}
+
+	@Override
+	public Review getReviewByCar(Car car) {
+		// TODO Auto-generated method stub
+		return reviewRepo.findReviewByCar(car);
+	}
+
+	@Override
+	public List<Review> getReviewsByPerson(Person person) {
+		// TODO Auto-generated method stub
+		return reviewRepo.findReviewsByPerson(person);
 	}
 
 }

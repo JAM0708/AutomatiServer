@@ -65,8 +65,8 @@ public class CarService implements CarServiceInterface {
 	@Override
 	public List<Car> getCars(Person person) {
 		// TODO get logger for class
-		List<Car> results = carRepo.findCarByPerson(person);
-		results.forEach(line->System.out.println(line.getFeature()));
+		List<Car> results = carRepo.findCarsByPerson(person);
+		//results.forEach(line->System.out.println(line.getFeature()));
 		return results;
 
 	}
@@ -208,4 +208,16 @@ public class CarService implements CarServiceInterface {
 		// TODO Auto-generated method stub
 		return engineRepo.findAll();
 	}
+
+	@Override
+	public List<Car> getCarsByPerson(Person person) {
+		// TODO Auto-generated method stub
+		List<Car> cars = carRepo.findCarsByPerson(person);
+		
+		List<Car> results = cars.stream().filter(car -> car.isReviewed() == false).collect(Collectors.toList()); 
+
+		return results;
+	}
+
+
 }

@@ -20,6 +20,7 @@ import com.automati.dataentity.Feature;
 import com.automati.dataentity.Lease;
 import com.automati.dataentity.Model;
 import com.automati.dataentity.Person;
+import com.automati.dataentity.Review;
 import com.automati.dataentity.Role;
 import com.automati.dataentity.State;
 import com.automati.dataentity.Transmission;
@@ -182,12 +183,16 @@ public class CarController {
 		return carService.getAllEngines();
 	}
 	
-	
-	
 	@RequestMapping(path="/features", method= RequestMethod.GET,  produces= MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<Feature> getAllFeatures() {
 		return carService.getAllFeatures();
 	}
 	
+	@RequestMapping(path="/carsByPerson", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Car> getCarsByPerson(@RequestParam("email") String email) {
+		Person person = personService.findPersonByEmail(email);
+		return carService.getCarsByPerson(person);
+	}
 }
