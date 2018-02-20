@@ -84,15 +84,17 @@ public class Car {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy= "car", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
 	private List<Review> review = new ArrayList<Review>();
+	 
+	@Column
+	private boolean reviewed;
 	
 	@OneToOne
 	@JoinColumn(name="person_id" , nullable = true)
 	private Person person;
+	
 
 	public Car() {
 	}
-	
-	
 	
 	public Car(int year, Model model, Color color, List<Feature> feature, Transmission transmission,
 			Condition condition, EPA epa, double price, Lease lease, List<Review> review, Person person) {
@@ -266,13 +268,18 @@ public class Car {
 		this.lease = lease;
 	}
 
+	
 	public List<Review> getReview() {
 		return review;
 	}
 
+
+
 	public void setReview(List<Review> review) {
 		this.review = review;
 	}
+
+
 
 	public Person getPerson() {
 		return person;
@@ -331,7 +338,15 @@ public class Car {
 	}
 
 
+	public boolean isReviewed() {
+		return reviewed;
+	}
 
+	public void setReviewed(boolean reviewed) {
+		this.reviewed = reviewed;
+	}
+
+	/*
 	@Override
 	public String toString() {
 		return "Car [id=" + id + ", year=" + year + ", mileage=" + mileage + ", title=" + title + ", model=" + model
@@ -339,7 +354,7 @@ public class Car {
 				+ condition + ", epa=" + epa + ", price=" + price + ", lease=" + lease + ", review=" + review
 				+ ", person=" + person + "]";
 	}	
-	
+	*/
 	public void addReview(Review oneReview) {
 		if(this.review == null) {
 			this.review = new ArrayList<>();

@@ -17,20 +17,38 @@ public class ReviewDTO implements Serializable {
 	private String time;
 	private String description;
 	private PersonDTO person;
-	private CarDTO car
+	private CarDTO car;
+	private ModelDTO model;
+	private String title;
 
-	;
-
-	public ReviewDTO(int id, int rating, String time, String description, PersonDTO person, CarDTO car) {
+	public ReviewDTO(int id, int rating, String time, String description, PersonDTO person, CarDTO car, ModelDTO model) {
 		this.id = id;
 		this.rating = rating;
 		this.time = time;
 		this.description = description;
 		this.person = person;
 		this.car = car;
+		this.model = model;
 	}
 
 	public ReviewDTO() {
+	}
+	
+	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public ModelDTO getModel() {
+		return model;
+	}
+
+	public void setModel(ModelDTO model) {
+		this.model = model;
 	}
 
 	public int getId() {

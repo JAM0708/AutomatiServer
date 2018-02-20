@@ -13,7 +13,8 @@ import com.automati.dataentity.Transmission;
 @Repository
 public interface CarRepo extends JpaRepository<Car, Integer> {
 	
-	List<Car> findCarByPerson(Person person);
+	List<Car> findCarsByPerson(Person person);
 	
 	List<Car> findCarByModel(Model model);
+	
 }
