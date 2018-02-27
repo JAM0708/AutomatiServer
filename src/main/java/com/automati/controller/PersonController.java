@@ -10,7 +10,9 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,22 +53,21 @@ public class PersonController {
 	CreditCardServiceInterface creditCardService;
 	
 	@RequestMapping(path="/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public JwtDTO login(@RequestBody PersonDTO personDTO) {
-		return personService.getLoginToken(personDTO.getEmail(), personDTO.getPassword());
+	public ResponseEntity<JwtDTO>ogin(@RequestBody PersonDTO personDTO) {
+		JwtDTO token = personService.getLoginToken(personDTO.getEmail(), personDTO.getPassword());
+		return new ResponseEntity<JwtDTO>(token, HttpStatus.OK);
 	}
 	
 	@RequestMapping(path="/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public StatusCheck register(@RequestBody PersonDTO personDTO) {
+	public ResponseEntity<StatusCheck> register(@RequestBody PersonDTO personDTO) {
 		State state = personService.findStateByName(personDTO.getState().getName());
 		Role role = personService.findRoleByName(personDTO.getRole().getName());
 		Person person = new Person(personDTO, state, role);
-		return personService.save(person);
+		StatusCheck results = personService.save(person);
+		return new ResponseEntity<StatusCheck>(results, HttpStatus.OK);
 	}
 	
 	@RequestMapping(path="/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
 	public void updateUser(@RequestBody PersonDTO personDTO) {
 		State state = personService.findStateByName(personDTO.getState().getName());
 		Role role = personService.findRoleByName(personDTO.getRole().getName());
@@ -75,47 +76,44 @@ public class PersonController {
 	}
 	
 	@RequestMapping(path="/zipcode", method = RequestMethod.GET,  produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public List<ZipCode> findZipCodesByState(@RequestParam("state") String stateName) {
+	public ResponseEntity<List<ZipCode>> findZipCodesByState(@RequestParam("state") String stateName) {
 		State state = personService.findStateByName(stateName);
-		return personService.getStateWithZipCodes(state);
+		List<ZipCode> zipCode = personService.getStateWithZipCodes(state);
+		return new ResponseEntity<List<ZipCode>>(zipCode, HttpStatus.OK);
 	}
 
 	@RequestMapping(path="/state", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public StatusCheck  saveState(@RequestBody StateDTO stateDTO) {
+	public ResponseEntity<StatusCheck>   saveState(@RequestBody StateDTO stateDTO) {
 		State state = new State(stateDTO.getName());
 		Iterator<ZipCodeDTO> codes =  stateDTO.getCodes().iterator();
 		for(ZipCodeDTO code: stateDTO.getCodes()) {
 			state.addZipCode(code.getCode());
 		}
-		return new StatusCheck(true);
+		StatusCheck results = personService.save(state);
+		return new ResponseEntity<StatusCheck>(results, HttpStatus.OK);
 	}
 	
 	@RequestMapping(path="/role", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public StatusCheck saveRole(@RequestBody RoleDTO roleDTO) {
+	public ResponseEntity<StatusCheck>  saveRole(@RequestBody RoleDTO roleDTO) {
 		Role role = new Role(roleDTO.getName());
-		return personService.save(role);
+		StatusCheck results = personService.save(role);
+		return new ResponseEntity<StatusCheck>(results, HttpStatus.OK);
 	}
 	
 	@RequestMapping(path="/state", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public List<State> getAllStates() {
-		return personService.getAllStates();
+	public ResponseEntity<List<State>> getAllStates() {
+		return new ResponseEntity<List<State>>( personService.getAllStates(), HttpStatus.OK);
 	}
 	
 	
 	@RequestMapping(path="/userEmail", method = RequestMethod.GET,  produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public Person findByUserbyEmail(@RequestParam("email") String email) {
+	public ResponseEntity<Person> findByUserbyEmail(@RequestParam("email") String email) {
 		Person person = personService.findPersonByEmail(email);
-		return person;
+		return new ResponseEntity<Person> (person, HttpStatus.OK);
 	}
 	
 
 	@RequestMapping(path="/updateShipping", method = RequestMethod.POST,  produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
 	public void updateShipping(@RequestBody ShippingDTO shippingDTO) {
 		Person person = personService.findPersonByEmail(shippingDTO.getPerson().getEmail());
 		State state = personService.findStateByName(shippingDTO.getState().getName());
@@ -124,16 +122,14 @@ public class PersonController {
 	}
 	
 	@RequestMapping(path = "/shipsAddress", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public List<Shipping> findShippingAddressesByUser(@RequestParam("email") String userEmail) {
+	public ResponseEntity<List<Shipping>> findShippingAddressesByUser(@RequestParam("email") String userEmail) {
 		Person person = personService.findPersonByEmail(userEmail);
-		return personService.findShippingsByPerson(person);
+		return new ResponseEntity<List<Shipping>>(personService.findShippingsByPerson(person), HttpStatus.OK);
 	}
 	
 	@RequestMapping(path = "/shipAddr", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public Shipping findShippingAddressById(@RequestParam("id") int id) {
-		return personService.findShippingAddressById(id);
+	public ResponseEntity<Shipping> findShippingAddressById(@RequestParam("id") int id) {
+		return new ResponseEntity<Shipping>(personService.findShippingAddressById(id), HttpStatus.OK);
 	}
 	
 	
