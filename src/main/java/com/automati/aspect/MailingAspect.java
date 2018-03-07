@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import com.automati.dataentity.Person;
+import com.automati.service.interfaces.PersonServiceInterface;
 
 @Aspect
 @Component
@@ -32,6 +33,9 @@ public class MailingAspect {
 
 	@Autowired
 	private TemplateEngine templateEngine;
+	
+	@Autowired
+	PersonServiceInterface personService;
 
 	@Pointcut("execution(* com.automati.repo.PersonRepo.save(..))")
 	private void forRegisterUser() {
@@ -51,52 +55,7 @@ public class MailingAspect {
 		final Context ctx = new Context();
 		ctx.setVariable("name", person.getFirstName() + " " + person.getLastName());
 		ctx.setVariable("imageResourceName", "car.jpg");
-
-		// Prepare message using a Spring helper
-		final MimeMessage mimeMessage = this.mailSender.createMimeMessage();
-		MimeMessageHelper message;
-		try {
-			message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-			message.setSubject("Welcome");
-		//	message.setFrom("thymeleaf@example.com");
-			message.setTo(person.getEmail());
-			// Create the HTML body using Thymeleaf
-			final String htmlContent = this.templateEngine.process("email", ctx);
-			message.setText(htmlContent, true /* isHtml */);
-			
-			try {
-				InputStreamSource imageSource = new ByteArrayResource(IOUtils.toByteArray(getClass().getResourceAsStream("/images/car.jpg")));
-				message.addInline("car.jpg", imageSource, "image/jpg");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-					
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// Send email
-		this.mailSender.send(mimeMessage);
-
-		/*
-		 * Context ctx = new Context(); ctx.setVariable("name",
-		 * person.getFirstName() + " " + person.getLastName());
-		 * 
-		 * MimeMessagePreparator messagePreparator = mimeMessage -> {
-		 * logger.info("Entering message helpeer"); MimeMessageHelper
-		 * messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-		 * messageHelper.setFrom("Automati@gmail.com");
-		 * messageHelper.setTo(person.getEmail());
-		 * messageHelper.setSubject("Welcome to Automati"); logger.info("here");
-		 * final String htmlContent = this.templateEngine.process("email", ctx);
-		 * messageHelper.setText(htmlContent, true);
-		 * logger.info(messageHelper.toString()); }; try {
-		 * logger.info(messagePreparator.toString());
-		 * mailSender.send(messagePreparator); } catch (MailException e) { //
-		 * runtime exception; compiler will not force you to handle it
-		 * logger.info(e.getMessage()); logger.info("failed to send"); }
-		 */
+		
+		personService.sendEmail("email", ctx, "email", "car.jpg", "Welcome");
 	}
 }

@@ -1,17 +1,29 @@
 package com.automati.service;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamSource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import com.automati.config.security.JWTUtils;
 import com.automati.dataentity.Car;
 import com.automati.dataentity.Person;
+import com.automati.dataentity.ResetToken;
 import com.automati.dataentity.Role;
 import com.automati.dataentity.Shipping;
 import com.automati.dataentity.State;
@@ -19,6 +31,7 @@ import com.automati.dataentity.ZipCode;
 import com.automati.dto.JwtDTO;
 import com.automati.dto.StatusCheck;
 import com.automati.repo.PersonRepo;
+import com.automati.repo.ResetTokenRepo;
 import com.automati.repo.RoleRepo;
 import com.automati.repo.ShippingRepo;
 import com.automati.repo.StateRepo;
@@ -47,6 +60,9 @@ public class PersonService implements PersonServiceInterface {
 	
 	@Autowired
 	private ShippingRepo shippingRepo;
+	
+	@Autowired
+	private ResetTokenRepo resetTokenRepo;
 
 	@Autowired
 	@Qualifier("brcypt")
@@ -55,6 +71,12 @@ public class PersonService implements PersonServiceInterface {
 	@Autowired
 	@Qualifier("status-check")
 	private StatusCheck status;
+	
+	@Autowired
+	private JavaMailSender mailSender;
+
+	@Autowired
+	private TemplateEngine templateEngine;
 	
 	/*
 	 * @Autowired
@@ -182,5 +204,56 @@ public class PersonService implements PersonServiceInterface {
 		}
 		return shipping;
 	}
+
+	@Override
+	public StatusCheck sendEmail(String email, Context ctx, String emailTemplate, String image, String subject) {
+		
+		final MimeMessage mimeMessage = this.mailSender.createMimeMessage();
+		MimeMessageHelper message;
+		try {
+			message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+			message.setSubject(subject);
+			message.setFrom("admin@automati.com");
+			message.setTo(email);
+			
+			final String htmlContent = this.templateEngine.process(emailTemplate, ctx);
+			message.setText(htmlContent, true);
+			
+			try {
+				InputStreamSource imageSource = new ByteArrayResource(IOUtils.toByteArray(getClass().getResourceAsStream("/images/" + image)));
+				message.addInline(image, imageSource, "image/jpg");
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+				return new StatusCheck(false);
+			}
+					
+		} catch (MessagingException e) {
+			
+			e.printStackTrace();
+			return new StatusCheck(false);
+		}
+
+		
+		this.mailSender.send(mimeMessage);
+		
+		return new StatusCheck(true);
+	}
+
+	@Override
+	public StatusCheck storeToken(ResetToken resetToken) {
+		
+		resetTokenRepo.save(resetToken);
+		return new StatusCheck(true) ;
+	}
+	
+	@Override
+	public ResetToken findToken(ResetToken resetToken) {
+		ResetToken token = resetTokenRepo.findResetTokenByTokenNumAndEmail(resetToken.getTokenNum(), resetToken.getEmail());
+		resetTokenRepo.delete(token);
+		return token;
+		
+	}
+	
 
 }

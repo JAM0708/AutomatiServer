@@ -21,10 +21,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.thymeleaf.context.Context;
 
 import com.automati.dataentity.Car;
 import com.automati.dataentity.CreditCard;
 import com.automati.dataentity.Person;
+import com.automati.dataentity.ResetToken;
 import com.automati.dataentity.Role;
 import com.automati.dataentity.Shipping;
 import com.automati.dataentity.State;
@@ -32,6 +34,7 @@ import com.automati.dataentity.ZipCode;
 import com.automati.dto.CreditCardDTO;
 import com.automati.dto.JwtDTO;
 import com.automati.dto.PersonDTO;
+import com.automati.dto.ResetTokenDTO;
 import com.automati.dto.RoleDTO;
 import com.automati.dto.ShippingDTO;
 import com.automati.dto.StateDTO;
@@ -53,10 +56,41 @@ public class PersonController {
 	CreditCardServiceInterface creditCardService;
 	
 	@RequestMapping(path="/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<JwtDTO>ogin(@RequestBody PersonDTO personDTO) {
+	public ResponseEntity<JwtDTO> login(@RequestBody PersonDTO personDTO) {
 		JwtDTO token = personService.getLoginToken(personDTO.getEmail(), personDTO.getPassword());
 		return new ResponseEntity<JwtDTO>(token, HttpStatus.OK);
 	}
+	
+	@RequestMapping(path="/forgotPassword", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<StatusCheck> forgotPassword(@RequestBody PersonDTO personDTO) {
+		Person person = personService.findPersonByEmail(personDTO.getEmail());
+		if(person == null) {
+			return new ResponseEntity<StatusCheck>(new StatusCheck(false), HttpStatus.OK);
+		} else {
+			final Context ctx = new Context();
+			ctx.setVariable("name", person.getFirstName() + " " + person.getLastName());
+			ctx.setVariable("imageResourceName", "token.jpg");
+			int tokenNum = (int) (Math.random() * person.getId()) * 5;
+			ctx.setVariable("url", "localhost:4200/passwordReset?token=" + tokenNum + person.getEmail() );
+			StatusCheck status = personService.sendEmail(person.getEmail(), ctx, "passwordToken", "token.jpg", "passwordToken");
+			if(status.isPassed()) {
+				status = personService.storeToken(new ResetToken(tokenNum, person.getEmail()));
+			}
+			return new ResponseEntity<StatusCheck>(status, HttpStatus.OK);
+		}
+	}
+	
+	@RequestMapping(path="/passwordReset", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<StatusCheck> passwordReset(@RequestBody ResetTokenDTO resetTokenDTO) {
+		ResetToken token = new ResetToken(resetTokenDTO.getTokenNum(), resetTokenDTO.getEmail());
+		ResetToken result = personService.findToken(token);
+		if(result == null) {
+			return new ResponseEntity<StatusCheck>(new  StatusCheck(false), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<StatusCheck>(new  StatusCheck(true), HttpStatus.OK);
+		}
+	}
+	
 	
 	@RequestMapping(path="/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<StatusCheck> register(@RequestBody PersonDTO personDTO) {
