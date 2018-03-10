@@ -30,6 +30,9 @@ public class Color {
 	@Column(name = "description")
 	private String description;
 
+	@Column(name = "color_price")
+	private float colorPrice;
+	
 	public Color(int id, String name) {
 		this.id = id;
 		this.name = name;
@@ -90,4 +93,13 @@ public class Color {
 		this.description = description;
 	}
 
+	public float getColorPrice() {
+		return colorPrice;
+	}
+
+	public void setColorPrice(float colorPrice) {
+		this.colorPrice = colorPrice;
+	}
+
+	
 }

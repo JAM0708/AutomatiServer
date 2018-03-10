@@ -24,6 +24,9 @@ public class Engine {
 	@Column()
 	private float litres;
 
+	@Column(name = "stock_engine_price")
+	private float stockEnginePrice;
+	
 	public Engine() {
 		
 	}
@@ -63,10 +66,17 @@ public class Engine {
 		this.litres = litres;
 	}
 
+	public float getStockEnginePrice() {
+		return stockEnginePrice;
+	}
+
+	public void setStockEnginePrice(float stockEnginePrice) {
+		this.stockEnginePrice = stockEnginePrice;
+	}
+
 	@Override
 	public String toString() {
 		return "Engine [id=" + id + ", cylinders=" + cylinders + ", litres=" + litres + "]";
 	}
-	
 	
 }

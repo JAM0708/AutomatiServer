@@ -158,7 +158,8 @@ public class PersonService implements PersonServiceInterface {
 	public <T> void update(T object) {
 		if (object instanceof Person) {
 			Person person = (Person) object;
-			person.setPassword(passwordEncoder.encode(person.getPassword()));
+			// person.setPassword(passwordEncoder.encode(person.getPassword()));
+			logger.info(person.toString());
 			personRepo.save((Person) object);
 			
 		}

@@ -11,26 +11,68 @@ public class ColorDTO implements Serializable {
 	
 	private int id;
 	private String name;
+	private String imgSrc;
+	private String imgAlt;
+	private String description;
+	private float colorPrice;
+	
+	
 	
 	
 	
 	public ColorDTO() {
 	}
-	
-	
 
-	public ColorDTO(String name) {
-		this.name = name;
-	}
-
-
-
-	public ColorDTO(int id, String name) {
+	public ColorDTO(int id, String name, String imgSrc, String imgAlt, String description, float colorPrice) {
 		this.id = id;
 		this.name = name;
+		this.imgSrc = imgSrc;
+		this.imgAlt = imgAlt;
+		this.description = description;
+		this.colorPrice = colorPrice;
+	}
+	
+	
+
+	public ColorDTO(String name, String imgSrc, String imgAlt, String description, float colorPrice) {
+		this.name = name;
+		this.imgSrc = imgSrc;
+		this.imgAlt = imgAlt;
+		this.description = description;
+		this.colorPrice = colorPrice;
 	}
 
+	public String getImgSrc() {
+		return imgSrc;
+	}
 
+	public void setImgSrc(String imgSrc) {
+		this.imgSrc = imgSrc;
+	}
+
+	public String getImgAlt() {
+		return imgAlt;
+	}
+
+	public void setImgAlt(String imgAlt) {
+		this.imgAlt = imgAlt;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public float getColorPrice() {
+		return colorPrice;
+	}
+
+	public void setColorPrice(float colorPrice) {
+		this.colorPrice = colorPrice;
+	}
 
 	public int getId() {
 		return id;

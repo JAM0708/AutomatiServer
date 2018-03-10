@@ -23,6 +23,7 @@ public class PersonDTO implements Serializable {
 	private String password;
 	private StateDTO state;
 	private RoleDTO role;
+	private float balance;
 	private List<CreditCardDTO> creditCard = new ArrayList<CreditCardDTO>();
 	
 	
@@ -82,6 +83,17 @@ public class PersonDTO implements Serializable {
 
 	public PersonDTO(int id) {
 		this.id = id;
+	}
+
+
+	public float getBalance() {
+		return balance;
+	}
+
+
+
+	public void setBalance(float balance) {
+		this.balance = balance;
 	}
 
 

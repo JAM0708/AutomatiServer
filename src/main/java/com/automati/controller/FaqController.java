@@ -1,15 +1,12 @@
 package com.automati.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.automati.dataentity.CreditCard;
@@ -24,6 +21,8 @@ import com.automati.service.interfaces.CreditCardServiceInterface;
 import com.automati.service.interfaces.FaqServiceInterface;
 import com.automati.service.interfaces.PersonServiceInterface;
 
+import javassist.NotFoundException;
+
 @RestController
 public class FaqController {
 	
@@ -32,8 +31,15 @@ public class FaqController {
 	
 	
 	@RequestMapping(path = "/getFaq", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Faq> getFaqs() {
-		return faqService.getFaqs();
+	public ResponseEntity<List<Faq>> getFaqs() throws NotFoundException {
+		
+		List<Faq> faqs = faqService.getFaqs();
+		
+		if(!faqs.isEmpty()) {
+			return ResponseEntity.ok(faqs);
+		}else {
+			throw new NotFoundException("FAQS NOT FOUND");
+		}
 	}
 
 }
