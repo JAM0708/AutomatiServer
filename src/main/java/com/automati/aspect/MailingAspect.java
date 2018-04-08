@@ -33,7 +33,7 @@ public class MailingAspect {
 	@Autowired
 	private TemplateEngine templateEngine;
 
-	@Pointcut("execution(* com.automati.repo.PersonRepo.save(..))")
+	@Pointcut("execution(* com.automati.controller.PersonController.register(..))")
 	private void forRegisterUser() {
 	}
 

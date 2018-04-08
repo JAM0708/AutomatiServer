@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,30 +44,17 @@ public class PurchaseController {
 	
 	@RequestMapping(path="/creditCard", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<CreditCard>> findCreditCardsByUser(@RequestParam("email") String userEmail) throws Exception {
-		// check if the user exists
+	public List<CreditCard> findCreditCardsByUser(@RequestParam("email") String userEmail) {
 		Person person = personService.findPersonByEmail(userEmail);
-		if(person == null) {
-			String message = "Could not find person with email of " + userEmail;
-			
-			throw new Exception(message);
-		}
-		List<CreditCard> creditCards = creditCardService.findCreditCardsByUser(person);
-		
-		return ResponseEntity.ok(creditCards);
+		return creditCardService.findCreditCardsByUser(person);
 	}
 	
 	
 	@RequestMapping(path="/card", method = RequestMethod.GET,  produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<CreditCard> findCreditCardByID(@RequestParam("id") int id) throws Exception {
+	public CreditCard findCreditCardByID(@RequestParam("id") int id) {
 		CreditCard card = creditCardService.findCreditCardById(id);
-		if(card  == null) {
-			String message = "Could not find creditcard with id of " + id;
-			
-			throw new Exception(message);
-		}
-		return ResponseEntity.ok(card);
+		return card;
 	}
 
 	@RequestMapping(path="/lease", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
