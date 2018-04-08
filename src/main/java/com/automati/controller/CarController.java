@@ -3,7 +3,9 @@ package com.automati.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,27 +49,23 @@ public class CarController {
 	PersonServiceInterface personService;
 	
 	@RequestMapping(path="/cars", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public List<Car> getListofCarsByUser(@RequestParam("email") String email) {
+	public ResponseEntity<List<Car>> getListofCarsByUser(@RequestParam("email") String email) {
 		Person person = personService.findPersonByEmail(email);
-		return carService.getCars(person);
+		return new ResponseEntity<List<Car>>(carService.getCars(person), HttpStatus.OK);
 	}
 	
 	@RequestMapping(path="/car", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public Car findCarById(@RequestParam("id") int id) {
-		return carService.getCarById(id);
+	public ResponseEntity<Car> findCarById(@RequestParam("id") int id) {
+		return new ResponseEntity<Car>(carService.getCarById(id), HttpStatus.OK);
 	}
 	
 	@RequestMapping(path="/cars/model", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public List<Car> getListofCarsByModel(@RequestParam("model") String model) {
-		return carService.getCarsByModel(model);
+	public ResponseEntity<List<Car>> getListofCarsByModel(@RequestParam("model") String model) {
+		return new ResponseEntity<List<Car>>(carService.getCarsByModel(model), HttpStatus.OK);
 	}
 	
 	@RequestMapping(path="/car/save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public StatusCheck save(@RequestBody CarDTO carDTO) {
+	public ResponseEntity<StatusCheck> save(@RequestBody CarDTO carDTO) {
 		Model model = carService.getModelByName(carDTO.getModel().getName());
 		Color color = carService.getColorByName(carDTO.getColor().getName());
 		Transmission transmission =  carService.getTransmissionByName(carDTO.getTransmission().getName());
@@ -76,11 +74,10 @@ public class CarController {
 		Engine engine = carService.getEngine(carDTO.getEngine().getId());
 		//EPA epa = carService.getEPAByMileage(carDTO.getEpa().getMileage());
 		Car car = new Car(carDTO.getYear(), carDTO.getMileage(), carDTO.getTitle(),  model, color,  transmission, condition, carDTO.getPrice(), carDTO.getVin(), person, engine);
-		return carService.save(car); 
+		return new ResponseEntity<StatusCheck>(carService.save(car), HttpStatus.OK); 
 	}
 	
 	@RequestMapping(path="/car/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
 	public void updateCar(@RequestBody CarDTO carDTO) {
 		Model model = carService.getModelByName(carDTO.getModel().getName());
 		Color color = carService.getColorByName(carDTO.getColor().getName());
@@ -94,105 +91,89 @@ public class CarController {
 	}
 	
 	@RequestMapping(path="/model", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public StatusCheck  saveModel(@RequestBody ModelDTO modelDTO) {
+	public ResponseEntity<StatusCheck>  saveModel(@RequestBody ModelDTO modelDTO) {
 		Model model = new Model(modelDTO.getName());
-		return carService.save(model);
+		return new ResponseEntity<StatusCheck>(carService.save(model), HttpStatus.OK);
 	}
 	
 	@RequestMapping(path="/transmission", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public StatusCheck saveTransmission(@RequestBody TransmissionDTO transmissionDTO) {
+	public ResponseEntity<StatusCheck> saveTransmission(@RequestBody TransmissionDTO transmissionDTO) {
 		Transmission transmisson = new Transmission(transmissionDTO.getName());
-		return carService.save(transmisson);
+		return new ResponseEntity<StatusCheck>(carService.save(transmisson), HttpStatus.OK);
 	}
 	
 	@RequestMapping(path="/color", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public StatusCheck saveColor(@RequestBody ColorDTO colorDTO) {
+	public ResponseEntity<StatusCheck> saveColor(@RequestBody ColorDTO colorDTO) {
 		Color color = new Color(colorDTO.getName());
-		return carService.save(color);
+		return new ResponseEntity<StatusCheck>(carService.save(color), HttpStatus.OK);
 	}
 	
 	@RequestMapping(path="/feature", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public StatusCheck saveFeature(@RequestBody FeatureDTO featureDTO) {
+	public ResponseEntity<StatusCheck> saveFeature(@RequestBody FeatureDTO featureDTO) {
 		Feature feature = new Feature(featureDTO.getName());
-		return carService.save(feature);
+		return new ResponseEntity<StatusCheck>(carService.save(feature), HttpStatus.OK);
 	}
 	
 	@RequestMapping(path="/epa", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public StatusCheck saveEPA(@RequestBody EPADTO epaDTO) {
+	public ResponseEntity<StatusCheck> saveEPA(@RequestBody EPADTO epaDTO) {
 		EPA epa = new EPA(epaDTO.getMileage());
-		return carService.save(epa);
+		return new ResponseEntity<StatusCheck>(carService.save(epa), HttpStatus.OK);
 	}
 	
 	@RequestMapping(path="/condition", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public StatusCheck saveCondition(@RequestBody ConditionDTO conditionDTO) {
+	public ResponseEntity<StatusCheck> saveCondition(@RequestBody ConditionDTO conditionDTO) {
 		Condition condition = new Condition(conditionDTO);
-		return carService.save(condition);
+		return new ResponseEntity<StatusCheck>(carService.save(condition), HttpStatus.OK);
 	}
 	
 	@RequestMapping(path="/models", method= RequestMethod.GET,  produces= MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public List<Model> getAllModels() {
-		return carService.getAllModels();
+	public ResponseEntity<List<Model>> getAllModels() {
+		return new ResponseEntity<List<Model>>(carService.getAllModels(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(path="/colors", method= RequestMethod.GET,  produces= MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public List<Color> getAllColors() {
-		return carService.getAllColors();
+	public ResponseEntity<List<Color>> getAllColors() {
+		return new ResponseEntity<List<Color>>(carService.getAllColors(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(path = "/color", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public Color getColor(@RequestParam("name") String name) {
-		return carService.getColorByName(name);
+	public ResponseEntity<Color> getColor(@RequestParam("name") String name) {
+		return new ResponseEntity<Color>(carService.getColorByName(name), HttpStatus.OK);
 	}
 	
 	@RequestMapping(path = "/car/model", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public Model getModel(@RequestParam("name") String name) {
-		return carService.getModelByName(name);
+	public ResponseEntity<Model> getModel(@RequestParam("name") String name) {
+		return new ResponseEntity<Model>(carService.getModelByName(name), HttpStatus.OK);
 	}
 	
 	@RequestMapping(path="/transmissions", method= RequestMethod.GET,  produces= MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public List<Transmission> getAllTransmissions() {
-		return carService.getAllTransmissions();
+	public ResponseEntity<List<Transmission>> getAllTransmissions() {
+		return new ResponseEntity<List<Transmission>>(carService.getAllTransmissions(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(path = "/transmission", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public Transmission getTransmission(@RequestParam("id") int id) {
-		return carService.getTransmission(id);
+	public ResponseEntity<Transmission> getTransmission(@RequestParam("id") int id) {
+		return new ResponseEntity<Transmission>(carService.getTransmission(id), HttpStatus.OK);
 	}
 	
 	@RequestMapping(path = "/engine", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public Engine getEngineById(@RequestParam("id") int id) {
-		return carService.getEngine(id);
+	public ResponseEntity<Engine> getEngineById(@RequestParam("id") int id) {
+		return new ResponseEntity<Engine>(carService.getEngine(id), HttpStatus.OK);
 	}
 	
 	@RequestMapping(path = "/engines", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public List<Engine> getEngines() {
-		return carService.getAllEngines();
+	public ResponseEntity<List<Engine>> getEngines() {
+		return new ResponseEntity<List<Engine>>(carService.getAllEngines(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(path="/features", method= RequestMethod.GET,  produces= MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public List<Feature> getAllFeatures() {
-		return carService.getAllFeatures();
+	public ResponseEntity<List<Feature>> getAllFeatures() {
+		return new ResponseEntity<List<Feature>>(carService.getAllFeatures(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(path="/carsByPerson", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public List<Car> getCarsByPerson(@RequestParam("email") String email) {
+	public ResponseEntity<List<Car>> getCarsByPerson(@RequestParam("email") String email) {
 		Person person = personService.findPersonByEmail(email);
-		return carService.getCarsByPerson(person);
+		return new ResponseEntity<List<Car>>(carService.getCarsByPerson(person), HttpStatus.OK);
 	}
 }

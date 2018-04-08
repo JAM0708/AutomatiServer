@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,8 +21,6 @@ import com.automati.dto.StatusCheck;
 import com.automati.service.interfaces.CarServiceInterface;
 import com.automati.service.interfaces.PersonServiceInterface;
 import com.automati.service.interfaces.ReviewServiceInterface;
-
-import javassist.NotFoundException;
 
 @RestController
 public class ReviewController {
@@ -54,39 +51,15 @@ public class ReviewController {
 	
 	@RequestMapping(path="/reviews", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<Review>> getListofReviewsByModel(@RequestParam("model") String model) throws Exception {
+	public List<Review> getListofReviewsByModel(@RequestParam("model") String model) {
 		Model modell = carService.getModelByName(model);
-		if(modell == null) {
-			String message = "Model cant be found given model name of " + model;
-			
-			throw new Exception(message);
-		}
-		
-		List<Review> reviews = reviewService.getReviewsByModel(modell);
-		if(!reviews.isEmpty()) {
-			return ResponseEntity.ok(reviews);
-		}
-		else {
-			throw new NotFoundException("Reviews NOT FOUND");
-		}
+		return reviewService.getReviewsByModel(modell);
 	}
 	
 	@RequestMapping(path="/reviewsPeople", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<Review>> getReviewsByPerson(@RequestParam("email") String email) throws Exception {
+	public List<Review> getReviewsByPerson(@RequestParam("email") String email) {
 		Person person = personService.findPersonByEmail(email);
-		if(person == null) {
-			String message = "Person cant be found given email of " + email;
-			
-			throw new Exception(message);
-		}
-		
-		List<Review> reviews = reviewService.getReviewsByPerson(person);
-		if(!reviews.isEmpty()) {
-			return ResponseEntity.ok(reviews);
-		}
-		else {
-			throw new NotFoundException("Reviews NOT FOUND");
-		}
+		return reviewService.getReviewsByPerson(person);
 	}
 }
