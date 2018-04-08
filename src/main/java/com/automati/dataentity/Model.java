@@ -30,6 +30,9 @@ public class Model {
 	@Column(name = "description")
 	private String description;
 	
+	@Column(name = "model_stock_price")
+	private float modelStockPrice;
+	
 	public Model() {
 	}
 
@@ -89,6 +92,12 @@ public class Model {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	     
-	
+
+	public float getModelStockPrice() {
+		return modelStockPrice;
+	}
+
+	public void setModelStockPrice(float modelStockPrice) {
+		this.modelStockPrice = modelStockPrice;
+	}
 }

@@ -93,6 +93,7 @@ public class Person {
 		this.street = personDTO.getStreet();
 		this.city = personDTO.getCity();
 		this.password = personDTO.getPassword();
+		this.balance = personDTO.getBalance();
 		this.state = state;
 		this.role = role;
 	}
@@ -165,27 +166,12 @@ public class Person {
 	public void setCreditCard(List<CreditCard> creditCard) {
 		this.creditCard = creditCard;
 	}
-	@Override
-	public String toString() {
-		return "Person [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", street=" + street + ", city=" + city + ", password=" + password + ", state=" + state + ", role="
-				+ role + ", creditCard=" + creditCard + ", balance=" + balance + "]";
-	}
-
 	*/
-
 	
 	public String getEmail() {
 		return email;
 	}
-
-	@Override
-	public String toString() {
-		return "Person [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", street=" + street + ", city=" + city + ", password=" + password + ", state=" + state + ", role="
-				+ role + ", balance=" + balance + "]";
-	}
-
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -198,7 +184,13 @@ public class Person {
 	public void setBalance(float balance) {
 		this.balance = balance;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", street=" + street + ", city=" + city + ", password=" + password + ", state=" + state + ", role="
+				+ role + ", balance=" + balance + "]";
+	}
 	
 
 }

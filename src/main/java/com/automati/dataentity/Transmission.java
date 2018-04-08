@@ -30,6 +30,9 @@ public class Transmission {
 	@Column(name = "description")
 	private String description;
 	
+	@Column(name = "transmission_price")
+	private float transmissionPrice;
+	
 	public Transmission(int id, String name) {
 		this.id = id;
 		this.name = name;
@@ -97,4 +100,15 @@ public class Transmission {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+
+	public float getTransmissionPrice() {
+		return transmissionPrice;
+	}
+
+
+	public void setTransmissionPrice(float transmissionPrice) {
+		this.transmissionPrice = transmissionPrice;
+	}
+	
 }

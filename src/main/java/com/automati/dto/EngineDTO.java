@@ -14,21 +14,23 @@ public class EngineDTO implements Serializable {
 	private int id;
 	private int cylinders;
 	private float litres;
-	
+	private float stockEnginePrice;
 	
 	
 	public EngineDTO() {
 	}
 	
-	public EngineDTO(int id, int cylinders, float litres) {
+	public EngineDTO(int id, int cylinders, float litres, float stockEnginePrice) {
 		this.id = id;
 		this.cylinders = cylinders;
 		this.litres = litres;
+		this.stockEnginePrice = stockEnginePrice;
 	}
 
-	public EngineDTO(int cylinders, float litres) {
+	public EngineDTO(int cylinders, float litres, float stockEnginePrice) {
 		this.cylinders = cylinders;
 		this.litres = litres;
+		this.stockEnginePrice = stockEnginePrice;
 	}
 
 	public int getId() {
@@ -55,6 +57,18 @@ public class EngineDTO implements Serializable {
 		this.litres = litres;
 	}
 
-	
+	public float getStockEnginePrice() {
+		return stockEnginePrice;
+	}
+
+	public void setStockEnginePrice(float stockEnginePrice) {
+		this.stockEnginePrice = stockEnginePrice;
+	}
+
+	@Override
+	public String toString() {
+		return "EngineDTO [id=" + id + ", cylinders=" + cylinders + ", litres=" + litres + ", stockEnginePrice="
+				+ stockEnginePrice + "]";
+	}
 	
 }
