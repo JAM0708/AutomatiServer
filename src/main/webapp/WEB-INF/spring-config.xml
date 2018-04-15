@@ -23,11 +23,17 @@
 		<mvc:mapping path="/**" allowed-methods="GET, POST, PUT"   allow-credentials="false"  allowed-origins="*" />
 	</mvc:cors>
 	
+	<bean id = "appProperties"
+		 class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name = "location" value = "classpath:app.properties"></property>
+	</bean>
+	
+	<!-- Database Configuration -->
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
-		<property name="username" value="automati"></property>
-		<property name="password" value="admin123"></property>
+		<property name="url" value="${db.url}"></property>
+		<property name="username" value= "${db.username}"></property>
+		<property name="password" value="${db.password}"></property>
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
 	</bean>
 	
@@ -42,7 +48,7 @@
 				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.format_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.hbm2ddl.auto">none</prop>
 			</props>
 		</property>
 	</bean>

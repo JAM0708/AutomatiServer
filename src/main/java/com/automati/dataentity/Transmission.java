@@ -38,7 +38,6 @@ public class Transmission {
 		this.name = name;
 	}
 	
-	
 	public Transmission(int id, String name, String imgSrc, String imgAlt, String description) {
 		this.id = id;
 		this.name = name;
