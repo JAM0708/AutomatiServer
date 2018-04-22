@@ -33,7 +33,7 @@ public class MailingAspect {
 	@Autowired
 	private TemplateEngine templateEngine;
 
-	@Pointcut("execution(* com.automati.controller.PersonController.register(..))")
+	@Pointcut("execution(* com.automati.repo.PersonRepo.save(..))")
 	private void forRegisterUser() {
 	}
 
@@ -44,6 +44,7 @@ public class MailingAspect {
 		logger.info(theMethod);
 
 		Object[] args = theJoinPoint.getArgs();
+		System.out.println(args[0]);
 		final Person person = (Person) args[0];
 
 		logger.info(person.toString());
