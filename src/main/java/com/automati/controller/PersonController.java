@@ -108,6 +108,7 @@ public class PersonController {
 	}
 	
 	@RequestMapping(path="/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
 	public ResponseEntity<StatusCheck> register(@RequestBody PersonDTO personDTO) {
 		State state = personService.findStateByName(personDTO.getState().getName());
 		Role role = personService.findRoleByName(personDTO.getRole().getName());

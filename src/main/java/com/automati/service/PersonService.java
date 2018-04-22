@@ -181,7 +181,7 @@ public class PersonService implements PersonServiceInterface {
 		if (object instanceof Person) {
 			Person person = (Person) object;
 			person.setPassword(passwordEncoder.encode(person.getPassword()));
-			personRepo.save((Person) object);
+			personRepo.saveAndFlush((Person) object);
 			
 		}
 		else if(object instanceof Shipping) {
