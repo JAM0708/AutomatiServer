@@ -33,7 +33,7 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="url" value="jdbc:oracle:thin:@oracledb.cfck349fmlqi.us-east-2.rds.amazonaws.com:1521:oracledb"></property>
 		<property name="username" value= "automatiDB"></property>
-		<property name="password" value="makeBelieve"></property>
+		<property name="password" value="573205Db"></property>
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
 	</bean>
 	

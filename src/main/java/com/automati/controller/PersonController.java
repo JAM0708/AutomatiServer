@@ -61,9 +61,9 @@ public class PersonController {
 		return new ResponseEntity<JwtDTO>(token, HttpStatus.OK);
 	}
 	
-	@RequestMapping(path="/forgotPassword", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<StatusCheck> forgotPassword(@RequestBody PersonDTO personDTO) {
-		Person person = personService.findPersonByEmail(personDTO.getEmail());
+	@RequestMapping(path="/forgotPassword", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<StatusCheck> forgotPassword(@RequestParam String email) {
+		Person person = personService.findPersonByEmail(email);
 		if(person == null) {
 			return new ResponseEntity<StatusCheck>(new StatusCheck(false), HttpStatus.OK);
 		} else {
@@ -71,7 +71,8 @@ public class PersonController {
 			ctx.setVariable("name", person.getFirstName() + " " + person.getLastName());
 			ctx.setVariable("imageResourceName", "car.jpg");
 			int tokenNum = (int) (Math.random() * person.getId()) * 5;
-			ctx.setVariable("url", "http://localhost:4200/passwordReset?token=" + tokenNum + "&email=" + person.getEmail() );
+			ctx.setVariable("url", "http://automati-client-host.s3-website.us-east-2.amazonaws.com/passwordReset?token=" + tokenNum + "&email=" + person.getEmail() );
+			//ctx.setVariable("url", "http://localhost:4200/passwordReset?token=" + tokenNum + "&email=" + person.getEmail() );
 			StatusCheck status = personService.sendEmail(person.getEmail(), ctx, "passwordToken", "car.jpg", "passwordToken");
 			if(status.isPassed()) {
 				status = personService.storeToken(new ResetToken(tokenNum, person.getEmail()));
@@ -125,6 +126,11 @@ public class PersonController {
 		personService.update(person);
 	}
 	
+	@RequestMapping(path="/updateBalance", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public void updateBalance(@RequestBody PersonDTO personDTO) {
+		Person person = personService.findPersonByEmail(personDTO.getEmail());
+		personService.updateBalance(person);
+	} 
 	@RequestMapping(path="/zipcode", method = RequestMethod.GET,  produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ZipCode>> findZipCodesByState(@RequestParam("state") String stateName) {
 		State state = personService.findStateByName(stateName);

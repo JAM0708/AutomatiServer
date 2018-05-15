@@ -267,6 +267,11 @@ public class PersonService implements PersonServiceInterface {
 		List<ResetToken> tokens = resetTokenRepo.findResetTokensByEmail(email);
 		tokens.forEach(token -> resetTokenRepo.delete(token));
 	}
+
+	@Override
+	public void updateBalance(Person person) {
+		personRepo.saveAndFlush(person);
+	}
 	
 
 }
