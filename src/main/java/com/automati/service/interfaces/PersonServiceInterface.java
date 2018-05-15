@@ -45,4 +45,6 @@ public interface PersonServiceInterface  extends GenericServiceInterface{
 	public void resetPassword(Person person);
 
 	public void deleteTokens(String email);
+
+	public void updateBalance(Person person);
 }
