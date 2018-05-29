@@ -39,4 +39,6 @@ public interface CarServiceInterface extends GenericServiceInterface {
 	public List<Engine> getAllEngines();
 	
 	public List<Car> getCarsByPerson(Person person);
+	
+	public String setVin();
 }

@@ -73,6 +73,7 @@ public class CarController {
 		Person person = personService.findPersonByEmail(carDTO.getPerson().getEmail());
 		Engine engine = carService.getEngine(carDTO.getEngine().getId());
 		//EPA epa = carService.getEPAByMileage(carDTO.getEpa().getMileage());
+		carDTO.setVin(carService.setVin());
 		Car car = new Car(carDTO.getYear(), carDTO.getMileage(), carDTO.getTitle(),  model, color,  transmission, condition, carDTO.getPrice(), carDTO.getVin(), person, engine);
 		return new ResponseEntity<StatusCheck>(carService.save(car), HttpStatus.OK); 
 	}

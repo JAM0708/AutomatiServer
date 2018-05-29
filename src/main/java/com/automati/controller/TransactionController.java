@@ -62,13 +62,11 @@ public class TransactionController {
 		if(person == null) {
 			throw new Exception("Person NOT found");
 		}
-		CreditCard card = creditCardService.findCreditCardById(transactionDTO.getCard().getId());
-		if(card == null) {
-			throw new Exception("credit card not found");
-		}
 		Date now = new Date();
-		Transaction transaction = new Transaction(transactionDTO.getAmount(), now, transactionDTO.getDescription(), person, card);
-				
+		Transaction transaction = new Transaction(transactionDTO.getAmount(), now, transactionDTO.getDescription(), person, transactionDTO.getCreditCardNumber());
+		System.out.println(transaction.toString());
+		System.out.println(person.toString());
+		//person.addTransaction(transaction);
 		return transactionService.save(transaction);
 	}
 }

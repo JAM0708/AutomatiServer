@@ -337,7 +337,6 @@ public class Car {
 		this.engine = engine;
 	}
 
-
 	public boolean isReviewed() {
 		return reviewed;
 	}

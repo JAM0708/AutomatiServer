@@ -1,7 +1,6 @@
 package com.automati.dataentity;
 
 import java.util.Date;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,12 +13,9 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="transaction")
@@ -45,30 +41,32 @@ public class Transaction {
 	@JoinColumn(name="person_id")
 	private Person person;
 	
+	/*
 	@ManyToOne()
 	@JoinColumn(name="card_id")
 	private CreditCard creditCard;
+	*/
+	@Column(name = "credit_card_num", nullable = false, length=16)
+	private String creditCardNumber;
 	
 	public Transaction() {
 	}
-
-	public Transaction(int id, float amount, Date transactionDate, String description, Person person,
-			CreditCard creditCard) {
+	
+	public Transaction(int id, float amount, Date transactionDate, String description, Person person, String number) {
 		this.id = id;
 		this.amount = amount;
 		this.transactionDate = transactionDate;
 		this.description = description;
 		this.person = person;
-		this.creditCard = creditCard;
+		this.creditCardNumber = number;
 	}
 
-	
-	public Transaction(float amount, Date transactionDate, String description, Person person, CreditCard creditCard) {
+	public Transaction(float amount, Date transactionDate, String description, Person person, String number) {
 		this.amount = amount;
 		this.transactionDate = transactionDate;
 		this.description = description;
 		this.person = person;
-		this.creditCard = creditCard;
+		this.creditCardNumber = number;
 	}
 
 	public int getId() {
@@ -103,6 +101,14 @@ public class Transaction {
 		this.description = description;
 	}
 
+	public String getCreditCardNumber() {
+		return creditCardNumber;
+	}
+
+	public void setCreditCardNumber(String creditCardNumber) {
+		this.creditCardNumber = creditCardNumber;
+	}
+	
 	public Person getPerson() {
 		return person;
 	}
@@ -111,18 +117,10 @@ public class Transaction {
 		this.person = person;
 	}
 
-	public CreditCard getCreditCard() {
-		return creditCard;
-	}
-
-	public void setCreditCard(CreditCard creditCard) {
-		this.creditCard = creditCard;
-	}
-
 	@Override
 	public String toString() {
 		return "Transaction [id=" + id + ", amount=" + amount + ", transactionDate=" + transactionDate
-				+ ", description=" + description + ", person=" + person + ", creditCard=" + creditCard + "]";
+				+ ", description=" + description + ", person=" + person + ", creditCardNumber=" + creditCardNumber
+				+ "]";
 	}
-	
 }

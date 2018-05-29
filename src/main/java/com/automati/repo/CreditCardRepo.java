@@ -13,4 +13,6 @@ public interface CreditCardRepo extends JpaRepository<CreditCard, Integer> {
 	
 	List<CreditCard> findCreditCardByPerson(Person person);
 	
+	CreditCard findCreditCardByNumber(int number);
+	
 }

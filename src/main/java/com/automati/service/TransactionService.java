@@ -27,6 +27,7 @@ public class TransactionService implements TransactionServiceInterface{
 	public <T> StatusCheck save(T object) {
 		boolean passed = false;
 		if(object instanceof Transaction) {
+			//person.addTransaction(transaction);
 			transactionRepo.save((Transaction) object);
 			passed = true;
 		}

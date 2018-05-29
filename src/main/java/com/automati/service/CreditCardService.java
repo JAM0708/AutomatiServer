@@ -78,4 +78,12 @@ public class CreditCardService implements CreditCardServiceInterface {
 		return card;
 	}
 
+	@Override
+	public CreditCard findCreditCardByNumber(int number) {
+		// TODO Auto-generated method stub
+		CreditCard card = cardRepo.findCreditCardByNumber(number);
+		
+		return card;
+	}
+
 }
