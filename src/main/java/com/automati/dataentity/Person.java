@@ -17,6 +17,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.automati.dto.PersonDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "person")
@@ -53,7 +54,12 @@ public class Person {
 	@OneToOne
 	@JoinColumn(name = "role_id")
 	private Role role;
-
+	
+	/*0
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore()
+	private List<Transaction> transactions = new ArrayList<Transaction>();
+	*/
 	//@OneToMany( mappedBy= "person", cascade = CascadeType.ALL, orphanRemoval = true)
 	//private List<CreditCard> creditCard = new ArrayList<CreditCard>();
 	
@@ -191,6 +197,19 @@ public class Person {
 				+ ", street=" + street + ", city=" + city + ", password=" + password + ", state=" + state + ", role="
 				+ role + ", balance=" + balance + "]";
 	}
+	
+	/*
+	public void addTransaction(Transaction oneTransaction) {
+		if(this.transactions == null) {
+			System.out.println("I am here in this method");
+			this.transactions = new ArrayList<>();
+		}
+		transactions.forEach(tr -> System.out.println(tr.toString()));
+		this.transactions.add(oneTransaction);
+		oneTransaction.setPerson(this);
+		
+	}
+	*/
 	
 
 }

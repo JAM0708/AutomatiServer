@@ -129,8 +129,10 @@ public class PersonController {
 	@RequestMapping(path="/updateBalance", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public void updateBalance(@RequestBody PersonDTO personDTO) {
 		Person person = personService.findPersonByEmail(personDTO.getEmail());
+		person.setBalance(personDTO.getBalance());
 		personService.updateBalance(person);
 	} 
+	
 	@RequestMapping(path="/zipcode", method = RequestMethod.GET,  produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ZipCode>> findZipCodesByState(@RequestParam("state") String stateName) {
 		State state = personService.findStateByName(stateName);

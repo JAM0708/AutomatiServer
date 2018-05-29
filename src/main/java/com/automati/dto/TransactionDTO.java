@@ -15,28 +15,28 @@ public class TransactionDTO implements Serializable {
 	private Date transactionDate;
 	private String description;
 	private PersonDTO person;
-	private CreditCardDTO card;
+	private String creditCardNumber;
 	
 	
 	
 	public TransactionDTO(int id, float amount, Date transactionDate, String description, PersonDTO person,
-			CreditCardDTO card) {
+			String creditCardNumber) {
 		this.id = id;
 		this.amount = amount;
 		this.transactionDate = transactionDate;
 		this.description = description;
 		this.person = person;
-		this.card = card;
+		this.creditCardNumber = creditCardNumber;
 	}
 
 	public TransactionDTO() {
 		
 	}
-	public TransactionDTO(float amount, String description, PersonDTO person, CreditCardDTO card) {
+	public TransactionDTO(float amount, String description, PersonDTO person, String creditCardNumber) {
 		this.amount = amount;
 		this.description = description;
 		this.person = person;
-		this.card = card;
+		this.creditCardNumber = creditCardNumber;
 	}
 
 	public int getId() {
@@ -88,20 +88,18 @@ public class TransactionDTO implements Serializable {
 		this.person = person;
 	}
 
-
-	public CreditCardDTO getCard() {
-		return card;
+	public String getCreditCardNumber() {
+		return creditCardNumber;
 	}
 
-
-	public void setCard(CreditCardDTO card) {
-		this.card = card;
+	public void setCreditCardNumber(String creditCardNumber) {
+		this.creditCardNumber = creditCardNumber;
 	}
 
 	@Override
 	public String toString() {
 		return "TransactionDTO [id=" + id + ", amount=" + amount + ", transactionDate=" + transactionDate
-				+ ", description=" + description + ", person=" + person + ", card=" + card + "]";
+				+ ", description=" + description + ", person=" + person + ", creditCardNumber=" + creditCardNumber
+				+ "]";
 	}
-	
 }

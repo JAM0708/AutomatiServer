@@ -13,4 +13,6 @@ public interface CreditCardServiceInterface  extends GenericServiceInterface {
 	public Date getDateFromString(String dateString);
 	
 	public CreditCard findCreditCardById(int id);
+	
+	public CreditCard findCreditCardByNumber(int number);
 }

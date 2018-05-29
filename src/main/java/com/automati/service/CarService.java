@@ -1,8 +1,10 @@
 package com.automati.service;
 
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -217,6 +219,13 @@ public class CarService implements CarServiceInterface {
 		List<Car> results = cars.stream().filter(car -> car.isReviewed() == false).collect(Collectors.toList()); 
 
 		return results;
+	}
+
+	@Override
+	public String setVin() {
+		// Set a random vin
+		String vin = RandomStringUtils.randomAlphanumeric(17).toUpperCase();
+		return vin.toUpperCase();
 	}
 
 
